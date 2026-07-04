@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Bilgisayarım - Ultimate OS v3</title>
+    <title>Kişisel Bilgisayarım - Virus Sandbox Simulator</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,34 +11,28 @@
 
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
+            margin: 0; padding: 0; box-sizing: border-box; user-select: none;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body, html {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            width: 100%; height: 100vh; overflow: hidden;
             background: url('https://images.pexels.com/photos/1323556/pexels-photo-1323556.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center center fixed;
             background-size: cover;
+            transition: filter 0.3s;
         }
 
         /* GİRİŞ OVERLAY */
         .fullscreen-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px); z-index: 999999;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); z-index: 999999;
             display: flex; align-items: center; justify-content: center; color: white; text-align: center;
         }
         .fullscreen-box {
             background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.08); max-width: 550px;
         }
-        .f11-btn { background: #1db954; color: white; border: none; padding: 14px 40px; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 20px;}
+        .f11-btn { background: #d32f2f; color: white; border: none; padding: 14px 40px; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 20px;}
 
         /* MASAÜSTÜ GRID */
         .desktop {
@@ -53,70 +47,34 @@
         }
         .icon:hover { background: rgba(255, 255, 255, 0.15); }
         .icon-img { font-size: 2.3rem; margin-bottom: 6px; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4)); }
-        .icon.danger { color: #ff8888; }
+        
+        /* Virüs İkonları Özel Stili */
+        .icon.virus { color: #ff5252; font-weight: 600; }
+        .icon.virus:hover { background: rgba(255, 82, 82, 0.2); }
 
         /* WINDOW MEKANİĞİ */
         .popup-window {
             position: absolute; background: white; border: 1px solid rgba(0,0,0,0.15);
             border-radius: 12px; box-shadow: 0 25px 50px rgba(0,0,0,0.35); z-index: 100; overflow: hidden;
-            display: flex; flex-direction: column; min-width: 200px; min-height: 150px;
+            display: flex; flex-direction: column;
         }
         .window-header {
             background: #f6f6f6; padding: 12px 15px; font-size: 0.85rem; font-weight: 600;
             display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.06);
             cursor: move;
         }
-        .close-btn { background: #ff5f56; border: none; width: 14px; height: 14px; border-radius: 50%; cursor: pointer; color: transparent;}
-        .close-btn:hover { background: #ff3b30; }
+        .close-btn { background: #ff5f56; border: none; width: 14px; height: 14px; border-radius: 50%; cursor: pointer; }
         .window-content { flex: 1; overflow-y: auto; background: #fff;}
 
-        /* GOOGLE CHROME */
-        .google-container { width: 600px; height: 420px; display: flex; flex-direction: column; }
-        .google-nav { display: flex; gap: 10px; padding: 10px; background: #f1f3f4; align-items: center; }
-        .google-search-bar { flex: 1; padding: 6px 15px; border: 1px solid #dfe1e5; border-radius: 20px; outline: none; }
-        .google-results { padding: 20px; font-size: 0.9rem; }
-
-        /* YOUTUBE */
-        .youtube-container { width: 750px; height: 460px; background: #0f0f0f; color: white; display: flex; }
-        .yt-main { flex: 3; padding: 15px; }
-        .yt-video-player { width: 100%; height: 280px; background: #1e1e1e; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid #333; }
-        .yt-sidebar { flex: 1.3; padding: 15px; display: flex; flex-direction: column; gap: 10px; border-left: 1px solid #222; }
-        .yt-item { background: #212121; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
-
-        /* SPOTIFY */
-        .spotify-container { width: 340px; height: 400px; background: #121212; color: white; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .sp-track-card { background: #181818; padding: 15px; border-radius: 8px; text-align: center; }
-        .sp-btn { background: #1db954; color: black; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-
-        /* CHATGPT */
-        .ai-container { width: 400px; height: 450px; display: flex; flex-direction: column; background: #343541; color: #ececf1; }
-        .ai-chatbox { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.88rem; display: flex; flex-direction: column; gap: 12px; }
-        .ai-input-area { display: flex; padding: 10px; background: #40414f; }
-        .ai-input { flex: 1; background: transparent; border: none; color: white; outline: none; padding: 5px; }
-
-        /* DARK WEB (TOR) */
-        .tor-container { width: 580px; height: 380px; background: #1c1424; color: #af95d1; display: flex; flex-direction: column; }
-        .tor-nav { background: #2b1d3a; padding: 10px; display: flex; font-family: monospace; font-size: 0.8rem; }
-        .tor-body { padding: 20px; flex: 1; }
-
-        /* EMAIL */
-        .mail-container { width: 550px; height: 350px; display: flex; background: #f8f9fa; }
-        .mail-sidebar { width: 30%; background: #f1f3f4; border-right: 1px solid #e0e0e0; padding: 10px; font-size: 0.85rem; }
-        .mail-item { padding: 8px; cursor: pointer; border-radius: 4px; margin-bottom: 5px; }
-        .mail-item:hover { background: #e8eaed; }
-        .mail-content { width: 70%; padding: 20px; font-size: 0.9rem; color: #333; }
-
-        /* VİRÜSLER & EFEKTLER */
-        .creeper-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 20, 0, 0.97); z-index: 99998; display: none;
-            flex-direction: column; align-items: center; justify-content: center; color: #00ff00; font-family: 'Courier Prime', monospace;
+        /* MEMZ KAOS EFEKTLERİ */
+        @keyframes memzFlash {
+            0% { filter: invert(0%) hue-rotate(0deg); }
+            50% { filter: invert(100%) hue-rotate(180deg); }
+            100% { filter: invert(0%) hue-rotate(360deg); }
         }
-        .creeper-msg { font-family: 'VT323', monospace; font-size: 5rem; text-shadow: 0 0 20px #00ff00; margin-bottom: 20px; text-align: center;}
-        .shake-effect { animation: glitchShake 0.12s infinite; }
-        .creeper-tint { background: #021402 !important; color: #00ff00 !important; border: 1px solid #00ff00 !important; }
-        .creeper-tint * { color: #00ff00 !important; background: transparent !important; border-color: #00ff00 !important; }
-
+        .memz-active { animation: memzFlash 0.3s infinite; }
+        
+        /* CREEPER EFEKTLERİ */
         @keyframes glitchShake {
             0% { transform: translate(0, 0); }
             25% { transform: translate(-3px, 2px); }
@@ -124,45 +82,73 @@
             75% { transform: translate(-2px, -3px); }
             100% { transform: translate(2px, 2px); }
         }
+        .shake-effect { animation: glitchShake 0.1s infinite; }
+        .creeper-tint { background: #021402 !important; color: #00ff00 !important; border: 1px solid #00ff00 !important; }
+        .creeper-tint * { color: #00ff00 !important; background: transparent !important; border-color: #00ff00 !important; }
 
-        .wannacry-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #7a0000; z-index: 99999; color: white; display: none; padding: 40px; }
-        .wc-box { max-width: 960px; margin: 4vh auto; background: #000; border: 4px solid #ff0000; display: flex; padding: 30px; gap: 30px; }
+        /* UYGULAMA İÇERİKLERİ */
+        .google-container { width: 600px; height: 400px; display: flex; flex-direction: column; }
+        .google-nav { display: flex; gap: 10px; padding: 12px; background: #f1f3f4; align-items: center; }
+        .google-search-bar { flex: 1; padding: 8px 18px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
+        .google-results { padding: 20px; font-size: 0.9rem; }
+
+        .paint-container { width: 450px; height: 380px; display: flex; flex-direction: column; background: #eee; }
+        .paint-canvas { background: white; cursor: crosshair; flex: 1; }
+
+        .ai-container { width: 400px; height: 440px; display: flex; flex-direction: column; background: #343541; color: #ececf1; }
+        .ai-chatbox { flex: 1; padding: 15px; overflow-y: auto; font-size: 0.88rem; display: flex; flex-direction: column; gap: 12px; }
+        .ai-input-area { display: flex; padding: 10px; background: #40414f; }
+        .ai-input { flex: 1; background: transparent; border: none; color: white; outline: none; }
+
+        /* ANTIVIRUS PANEL */
+        .av-container { width: 420px; height: 320px; background: #1e293b; color: white; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .av-btn { background: #10b981; color: white; border: none; padding: 10px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+
+        /* MAVİ EKRAN VE TAM EKRAN UYARILAR */
+        .creeper-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 20, 0, 0.97); z-index: 99998; display: none;
+            flex-direction: column; align-items: center; justify-content: center; color: #00ff00;
+        }
         .bsod { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0078d4; color: white; z-index: 1000000; padding: 10% 15%; display: none; }
 
-        /* TASKBAR */
+        /* SPYWARE NOTIFICATION */
+        .spyware-alert {
+            position: fixed; bottom: 60px; right: 20px; background: #ff9800; color: black;
+            padding: 15px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 99999; font-weight: bold; border-left: 5px solid #e65100; display: none;
+        }
+
+        /* ALT ÇUBUK */
         .taskbar {
             width: 100%; height: 48px; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(20px);
             position: fixed; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 10000;
         }
     </style>
 </head>
-<body>
+<body id="bodyTag">
 
-    <!-- SİMÜLASYON BAŞLANGICI -->
+    <!-- OVERLAY -->
     <div class="fullscreen-overlay" id="fullscreenOverlay">
         <div class="fullscreen-box">
-            <h2>KİŞİSEL İŞLETİM SİSTEMİ LABORATUVARI</h2>
-            <p>Sistem yükleniyor. Spotify, Mail Kutusu, ChatGPT Asistanı ve Dark Web entegrasyonları dahil edildi. Tam ekran modunda çalıştırmanız önerilir.</p>
-            <button class="f11-btn" onclick="startSimulation()">SİSTEMİ AÇ</button>
+            <h2>🚨 VIRUS SANDBOX SIMULATOR v5 🚨</h2>
+            <p>Dikkat! Bu sistem birden fazla virüsün (MEMZ, Chernobyl, Spyware, Creeper) etkilerini simüle etmek için tasarlanmıştır. Güvenli modda çalıştırmak için butona basın.</p>
+            <button class="f11-btn" onclick="startSimulation()">SANDOBOX'I BAŞLAT</button>
         </div>
     </div>
 
     <!-- MASAÜSTÜ SİSTEMİ -->
     <div class="desktop" id="desktop">
         
+        <!-- NORMAL PROGRAMLAR -->
         <div class="icon" onclick="openGoogle()">
             <div class="icon-img">🌐</div>
             <span>Google Chrome</span>
         </div>
 
-        <div class="icon" onclick="openYouTube()">
-            <div class="icon-img">📺</div>
-            <span>YouTube</span>
-        </div>
-
-        <div class="icon" onclick="openSpotify()">
-            <div class="icon-img">🎵</div>
-            <span>Spotify</span>
+        <div class="icon" onclick="openPaint()">
+            <div class="icon-img">🎨</div>
+            <span>MS Paint</span>
         </div>
 
         <div class="icon" onclick="openAI()">
@@ -170,81 +156,63 @@
             <span>ChatGPT AI</span>
         </div>
 
-        <div class="icon" onclick="openTor()">
-            <div class="icon-img">🧅</div>
-            <span>Tor Browser</span>
+        <div class="icon" onclick="openAV()">
+            <div class="icon-img">🛡️</div>
+            <span>Anti-Virus Center</span>
         </div>
 
-        <div class="icon" onclick="openMail()">
-            <div class="icon-img">📨</div>
-            <span>Gelen Kutusu</span>
-        </div>
-
-        <div class="icon" onclick="openFolder('Kişisel Fotoğraflar', 'photos')">
-            <div class="icon-img">🖼️</div>
-            <span>Kişisel Galeri</span>
-        </div>
-
-        <div class="icon" onclick="openFolder('Ödevler & Projeler', 'documents')">
-            <div class="icon-img">📁</div>
-            <span>Ödevlerim</span>
-        </div>
-
-        <div class="icon" onclick="openTrash()">
-            <div class="icon-img">🗑️</div>
-            <span>Geri Dönüşüm</span>
-        </div>
-
-        <!-- TEHLİKELİ BÖLGE -->
-        <div class="icon danger" onclick="triggerWannaCry()">
-            <div class="icon-img">☠️</div>
-            <span>WannaCry.exe</span>
-        </div>
-
-        <div class="icon danger" onclick="triggerCreeper()">
+        <!-- ⚠️ VİRÜS CEPHANESİ -->
+        <div class="icon virus" onclick="activateCreeper()">
             <div class="icon-img">🦠</div>
-            <span>Creeper_1971.exe</span>
+            <span>Creeper.exe</span>
+        </div>
+
+        <div class="icon virus" onclick="activateMEMZ()">
+            <div class="icon-img">💥</div>
+            <span>MEMZ.exe</span>
+        </div>
+
+        <div class="icon virus" onclick="activateChernobyl()">
+            <div class="icon-img">💀</div>
+            <span>CIH_Chernobyl</span>
+        </div>
+
+        <div class="icon virus" onclick="activateSpyware()">
+            <div class="icon-img">🕵️‍♂️</div>
+            <span>Trojan.Spyware</span>
         </div>
 
     </div>
 
-    <!-- TASKBAR ÇUBUĞU -->
-    <div class="taskbar">
-        <button style="background:transparent; border:none; font-size:1.3rem; cursor:pointer;">🪟</button>
-        <div style="color:white; font-size:0.8rem; text-align:right;"><div id="clock">00:00<br>04.07.2026</div></div>
-    </div>
-
-    <!-- WANNA CRY BÖLÜMÜ -->
-    <div class="wannacry-screen" id="wannaCryScreen">
-        <div class="wc-box">
-            <div class="wc-left">
-                <h3 style="color:#ffcc00;">Dosya İmha Süresi:</h3>
-                <div style="font-family:'VT323'; font-size:4rem; color:red; margin:20px 0;" id="wcTimer">02:59:59</div>
-            </div>
-            <div class="wc-right">
-                <h2>Tüm Dosyalarınız Şifrelenmiştir!</h2>
-                <p>Masaüstündeki fotoğraflarınız, ödevleriniz ve mail geçmişiniz şu andan itibaren kilitlenmiştir. Geri yükleme yapmak için fidye ödemeniz gerekir.</p>
-                <button style="background:#218838; color:white; border:none; padding:12px 30px; cursor:pointer;" onclick="fixSystem()">Acil Güvenlik Resetlemesi</button>
-            </div>
-        </div>
+    <!-- SPYWARE BİLDİRİMİ -->
+    <div class="spyware-alert" id="spyAlert">
+        ⚠️ SİSTEME AJAN YAZILIM SIZDI! Şifreleriniz ve web kamerası görüntüleriniz uzak sunucuya gönderiliyor!
     </div>
 
     <!-- CREEPER EKRANI -->
     <div class="creeper-screen" id="creeperScreen">
-        <div class="creeper-msg">I'M THE CREEPER:<br>CATCH ME IF YOU CAN!</div>
-        <p style="color: red; cursor:pointer; text-decoration: underline;" onclick="fixSystem()">[ Antivirüs Protokolünü Çalıştır ]</p>
+        <h1 style="font-family:'VT323'; font-size:5rem;">I'M THE CREEPER...</h1>
+        <h2 style="font-family:'VT323'; font-size:3rem; margin-bottom:20px;">CATCH ME IF YOU CAN!</h2>
+        <p style="color:red; text-decoration:underline; cursor:pointer;" onclick="cleanAll()">[ SİSTEMİ REBOOT ET VE TEMİZLE ]</p>
+    </div>
+
+    <!-- GÖREV ÇUBUĞU -->
+    <div class="taskbar">
+        <button style="background:transparent; border:none; font-size:1.3rem; cursor:pointer;">🪟</button>
+        <div style="color:white; font-size:0.8rem; text-align:right;"><div id="clock">00:00<br>05.07.2026</div></div>
     </div>
 
     <!-- MAVİ EKRAN -->
     <div class="bsod" id="bsodScreen">
         <div style="font-size:6rem;">:(</div>
-        <h1>Sistem çökmesi gerçekleşti.</h1>
-        <p>Hatalar temizleniyor ve sistem reboot ediliyor... (<span id="resetProgress">0</span>%)</p>
+        <h1>Kritik Sistem Hatası (Kernel_Security_Check_Failure)</h1>
+        <p>Zararlı yazılımlar işletim sistemini tamamen yok etti. Geri yükleniyor... (<span id="resetProgress">0</span>%)</p>
     </div>
 
     <script>
-        let isCreeperActive = false;
-        let trashItems = ["Eski_Rapor.docx", "Gereksiz_Foto.png"];
+        // Virüs Durum Bayrakları
+        let activeViruses = { creeper: false, memz: false, chernobyl: false, spyware: false };
+        let chernobylTimer = null;
 
         function startSimulation() {
             if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
@@ -253,17 +221,26 @@
 
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerHTML = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}<br>${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
+            const clockEl = document.getElementById('clock');
+            if (activeViruses.chernobyl) {
+                // Chernobyl virüsü saati çıldırtıyor
+                clockEl.innerHTML = `00:00:00<br>00.00.1986`;
+            } else {
+                clockEl.innerHTML = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}<br>${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
+            }
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // PENCERE OLUŞTURUCU FABRİKA
+        // PENCERE FABRİKASI
         function createPopup(title, contentHTML, width, height) {
             const desktop = document.getElementById('desktop');
             const win = document.createElement('div');
             win.className = `popup-window`;
-            if(isCreeperActive) { win.className += " shake-effect creeper-tint"; }
             
+            // Virüs modifikasyonları
+            if(activeViruses.creeper) win.className += " shake-effect creeper-tint";
+            if(activeViruses.chernobyl) title = "☢️ CHERNOBYL ENCRYPTED ☢️";
+
             win.style.width = width;
             win.style.height = height;
             win.style.left = `${100 + Math.random() * 200}px`;
@@ -271,247 +248,198 @@
 
             win.innerHTML = `
                 <div class="window-header">
-                    <span>${title}</span>
+                    <span class="win-title">${title}</span>
                     <button class="close-btn" onclick="this.parentElement.parentElement.remove()">✕</button>
                 </div>
                 <div class="window-content">${contentHTML}</div>
             `;
             desktop.appendChild(win);
-            
-            // Sürükleme Mekaniği Eklentisi
+
+            // Sürükleme mekanizması
             let isDragging = false, posX = 0, posY = 0;
             win.querySelector('.window-header').onmousedown = (e) => {
                 isDragging = true;
-                posX = e.clientX - win.offsetLeft;
-                posY = e.clientY - win.offsetTop;
+                posX = e.clientX - win.offsetLeft; posY = e.clientY - win.offsetTop;
             };
             document.onmousemove = (e) => {
-                if (isDragging) {
-                    win.style.left = (e.clientX - posX) + 'px';
-                    win.style.top = (e.clientY - posY) + 'px';
-                }
+                if (isDragging) { win.style.left = (e.clientX - posX) + 'px'; win.style.top = (e.clientY - posY) + 'px'; }
             };
             document.onmouseup = () => isDragging = false;
+
+            // MEMZ Zıplama Etkisi
+            if (activeViruses.memz) {
+                setInterval(() => {
+                    win.style.left = `${Math.random() * (window.innerWidth - 300)}px`;
+                    win.style.top = `${Math.random() * (window.innerHeight - 300)}px`;
+                }, 800);
+            }
 
             return win;
         }
 
-        // GOOGLE CHROME MOCK
+        // GOOGLE CHROME
         function openGoogle() {
             const html = `
                 <div class="google-container">
                     <div class="google-nav">
-                        <span style="font-weight:bold; color:#4285F4; font-size:1.2rem;">Google</span>
-                        <input type="text" class="google-search-bar" placeholder="Aramak istediğinizi yazın..." onkeydown="handleGoogleSearch(event)">
+                        <span style="font-weight:bold; color:#4285F4;">Google</span>
+                        <input type="text" class="google-search-bar" id="gInp" placeholder="Arama yapın..." onkeydown="searchGoogle(event)">
                     </div>
-                    <div class="google-results" id="gResults">
-                        <h3>Bugünün Öne Çıkanları</h3>
-                        <p style="color:#666; margin-top:5px;">Siber saldırı uyarısı: Dünya genelinde eski virüs sistemleri tekrar canlanıyor.</p>
+                    <div class="google-results" id="gRes">
+                        <p style="color:#666; text-align:center; padding-top:40px;">Güvenli arama motoru aktif.</p>
                     </div>
                 </div>
             `;
             createPopup("Google Chrome", html, "auto", "auto");
         }
-
-        function handleGoogleSearch(e) {
+        function searchGoogle(e) {
             if (e.key === 'Enter') {
-                const q = e.target.value.toLowerCase();
-                const res = document.getElementById('gResults');
-                if(q.includes("kedi")) {
-                    res.innerHTML = `<h4>Miyav Dünyası</h4><p>Kediler harika canlılardır.</p><img src="https://images.pexels.com/photos/45201/kitty-cat-baby-cat-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=150" style="margin-top:10px;">`;
+                const q = e.target.value;
+                const res = document.getElementById('gRes');
+                if (activeViruses.spyware) {
+                    res.innerHTML = `<h3 style="color:red;">Sisteminiz Hacklendi!</h3><p>Arama sonuçları engellendi. Bilgilerinizi kurtarmak için ransom sitelerine yönlendiriliyorsunuz...</p>`;
                 } else {
-                    res.innerHTML = `<h4>"${q}" için sonuç bulunamadı</h4><p>Güvenli arama modu aktif.</p>`;
+                    res.innerHTML = `<h3>${q} ile ilgili sonuçlar:</h3><p style="color:green; font-size:0.8rem;">https://www.google.com/search?q=${q}</p><p style="margin-top:5px;">Simülasyon veritabanında bu kelimeye ait eşleşen harika web sayfaları bulundu.</p>`;
                 }
             }
         }
 
-        // YOUTUBE MOCK
-        function openYouTube() {
+        // MS PAINT
+        function openPaint() {
             const html = `
-                <div class="youtube-container">
-                    <div class="yt-main" id="ytPlayer">
-                        <div class="yt-video-player">📺 Lütfen sağdan bir video seçip oynatın.</div>
-                    </div>
-                    <div class="yt-sidebar">
-                        <div class="yt-item" onclick="playVideo('Siber Savaş Başladı mı?')">Siber Savaşlar</div>
-                        <div class="yt-item" onclick="playVideo('24 Saat Boyunca Yapay Zeka Kullandım')">Yapay Zeka Deneyimi</div>
-                    </div>
+                <div class="paint-container">
+                    <canvas id="pCanvas" class="paint-canvas" width="430" height="320"></canvas>
                 </div>
             `;
-            createPopup("YouTube", html, "auto", "auto");
-        }
-        function playVideo(title) {
-            document.getElementById('ytPlayer').innerHTML = `<div class="yt-video-player" style="background:#222; animation: glitchShake 0.5s infinite;">▶️ Oynatılıyor: ${title}</div><h3 style="margin-top:10px;">${title}</h3>`;
-        }
-
-        // SPOTIFY MOCK
-        function openSpotify() {
-            const html = `
-                <div class="spotify-container">
-                    <div class="sp-track-card">
-                        <div style="font-size:4rem;">🎵</div>
-                        <h3 id="spTitle">Şarkı Seçilmedi</h3>
-                        <p id="spArtist" style="color:#aaa; font-size:0.8rem;">Sanatçı</p>
-                    </div>
-                    <div style="display:flex; flex-direction:column; gap:8px;">
-                        <button style="background:#222; color:white; border:none; padding:5px; cursor:pointer;" onclick="changeTrack('Synthwave Cyber', 'Hacker Beats')">Synthwave Cyber</button>
-                        <button style="background:#222; color:white; border:none; padding:5px; cursor:pointer;" onclick="changeTrack('Retro Melankoli', 'Creeper Band')">Retro Melankoli</button>
-                    </div>
-                    <button class="sp-btn" onclick="alert('Müzik çalınıyor...')">OYNAT / DURDUR</button>
-                </div>
-            `;
-            createPopup("Spotify", html, "auto", "auto");
-        }
-        function changeTrack(t, a) {
-            if(isCreeperActive) {
-                document.getElementById('spTitle').textContent = "C-R-E-E-P-E-R";
-                document.getElementById('spArtist').textContent = "CRASH S_O_U_N_D";
-                return;
-            }
-            document.getElementById('spTitle').textContent = t;
-            document.getElementById('spArtist').textContent = a;
+            createPopup("MS Paint", html, "auto", "auto");
+            setTimeout(() => {
+                const cvs = document.getElementById('pCanvas');
+                const ctx = cvs.getContext('2d');
+                let draw = false;
+                cvs.onmousedown = () => draw = true;
+                cvs.onmouseup = () => { draw = false; ctx.beginPath(); };
+                cvs.onmousemove = (e) => {
+                    if(!draw) return;
+                    ctx.lineWidth = 5;
+                    ctx.lineCap = 'round';
+                    // MEMZ veya Creeper aktifse renkleri bozuyor
+                    ctx.strokeStyle = activeViruses.creeper ? '#00ff00' : (activeViruses.memz ? 'magenta' : '#ff0055');
+                    const r = cvs.getBoundingClientRect();
+                    ctx.lineTo(e.clientX - r.left, e.clientY - r.top);
+                    ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
+                };
+            }, 100);
         }
 
-        // CHATGPT MOCK
+        // CHATGPT
         function openAI() {
             const html = `
                 <div class="ai-container">
-                    <div class="ai-chatbox" id="aiBox">
-                        <div style="background:#444654; padding:8px; border-radius:4px;"><b>AI Asistanı:</b> Merhaba! Ben kişisel yapay zeka asistanınızım. Bilgisayarınızdaki dosyalar veya sistem güvenliği hakkında ne bilmek istersiniz?</div>
-                    </div>
-                    <div class="ai-input-area">
-                        <input type="text" class="ai-input" id="aiInp" placeholder="Bir şeyler yazın..." onkeydown="handleAI(event)">
-                    </div>
+                    <div class="ai-chatbox" id="aiBox"><div><b>ChatGPT:</b> Sorularınızı bekliyorum.</div></div>
+                    <div class="ai-input-area"><input type="text" class="ai-input" placeholder="Yazın..." onkeydown="askAI(event)"></div>
                 </div>
             `;
-            createPopup("ChatGPT - AI Asistan", html, "auto", "auto");
+            createPopup("ChatGPT AI", html, "auto", "auto");
         }
-        function handleAI(e) {
-            if (e.key === 'Enter') {
-                const val = e.target.value;
+        function askAI(e) {
+            if(e.key === 'Enter') {
                 const box = document.getElementById('aiBox');
-                box.innerHTML += `<div style="background:#343541; padding:8px;"><b>Siz:</b> ${val}</div>`;
-                e.target.value = "";
+                box.innerHTML += `<div><b>Siz:</b> ${e.target.value}</div>`;
+                let reply = "Sistem stabil durumda çalışıyor.";
+                if (activeViruses.memz) reply = "NYAN NYAN NYAN NYAN 🐱‍🚀 DERP! REİS BİLGİSAYAR ELDEN GİDİYOR HAHAHA!";
+                else if (activeViruses.creeper) reply = "I'M THE CREEPER: CATCH ME IF YOU CAN!";
+                else if (activeViruses.chernobyl) reply = "CORE MELTDOWN: TÜM VERİ ENJEKSİYONU BLOKE EDİLDİ.";
                 
                 setTimeout(() => {
-                    let reply = "Bu girdi üzerinde derinlemesine bir analiz yapamıyorum, sistem kararlılığını kontrol edin.";
-                    if(isCreeperActive) {
-                        reply = "I'M THE CREEPER: CATCH ME IF YOU CAN! I'M THE CREEPER: CATCH ME IF YOU CAN!";
-                    } else if (val.toLowerCase().includes("şifre") || val.toLowerCase().includes("sifre")) {
-                        reply = "Kritik Uyarı: Bilgisayarınızdaki 'Gizli_Şifreler.txt' dosyası şifrelenmemiş halde duruyor. Güvenliğiniz büyük risk altında!";
-                    }
-                    box.innerHTML += `<div style="background:#444654; padding:8px;"><b>AI Asistanı:</b> ${reply}</div>`;
-                    box.scrollTop = box.scrollHeight;
-                }, 600);
+                    box.innerHTML += `<div><b>ChatGPT:</b> ${reply}</div>`;
+                    e.target.value = "";
+                }, 400);
             }
         }
 
-        // TOR BROWSER (DARK WEB)
-        function openTor() {
+        // ANTI-VIRUS PANEL
+        function openAV() {
+            let statusHTML = "<ul>";
+            for(let v in activeViruses) {
+                statusHTML += `<li>${v.toUpperCase()}: ${activeViruses[v] ? "<b style='color:red;'>TEHLİKELİ</b>" : "<b style='color:green;'>TEMİZ</b>"}</li>`;
+            }
+            statusHTML += "</ul>";
+
             const html = `
-                <div class="tor-container">
-                    <div class="tor-nav">🧅 Tor Network Secured | Address: http://hidden-onion-v3-market.onion</div>
-                    <div class="tor-body">
-                        <h2 style="color:red; margin-bottom:10px;">Karanlık Borsa (Dark Market)</h2>
-                        <p style="font-size:0.85rem; margin-bottom:15px;">Aşağıdaki sızdırılmış verileri ve yasa dışı hack araçlarını satın almak için cüzdan bağlayın.</p>
-                        <div style="background:#2b1d3a; padding:10px; border-radius:6px; font-size:0.8rem; margin-bottom:10px; cursor:pointer;" onclick="alert('Hata: Yetersiz Bitcoin Bakiyesi!')">⚠️ <b>Kişisel Veri Paketi:</b> Kullanıcı fotoğrafları ve kimlik bilgileri sızıntısı -> 0.04 BTC</div>
-                        <div style="background:#2b1d3a; padding:10px; border-radius:6px; font-size:0.8rem; cursor:pointer;" onclick="alert('İndirme Başlatılamadı.')">🛠️ <b>Exploit Kit v4.2:</b> Güvenlik duvarı aşma aracı -> 0.1 BTC</div>
+                <div class="av-container">
+                    <h3>🛡️ Anti-Virus Güvenlik Kontrolü</h3>
+                    <div style="background:#0f172a; padding:10px; border-radius:4px; font-family:monospace; font-size:0.85rem;">
+                        ${statusHTML}
                     </div>
+                    <button class="av-btn" onclick="cleanAll()">SİSTEMİ TAMAMEN TEMİZLE</button>
                 </div>
             `;
-            createPopup("Tor Browser", html, "auto", "auto");
+            createPopup("Anti-Virus Center", html, "auto", "auto");
         }
 
-        // GELEN KUTUSU (MAIL)
-        function openMail() {
-            const html = `
-                <div class="mail-container">
-                    <div class="mail-sidebar">
-                        <div class="mail-item" onclick="viewMail(0)"><b>Merkez Bankası</b><br><span style="font-size:0.7rem; color:#666;">Şüpheli İşlem Bildirimi</span></div>
-                        <div class="mail-item" onclick="viewMail(1)"><b>Discord Team</b><br><span style="font-size:0.7rem; color:#666;">Hesap Güvenlik Kodunuz</span></div>
-                    </div>
-                    <div class="mail-content" id="mailBody">Lütfen okumak istediğiniz e-postayı soldan seçin.</div>
-                </div>
-            `;
-            createPopup("Gelen Kutusu (E-Posta)", html, "auto", "auto");
-        }
-        function viewMail(id) {
-            const body = document.getElementById('mailBody');
-            if(id === 0) {
-                body.innerHTML = `<h3>⚠️ Şüpheli Hesap Girişi</h3><br><p>Sayın Müşterimiz, hesabınıza yabancı bir IP üzerinden giriş yapılmaya çalışılmıştır. Eğer bu işlemi siz yapmadıysanız acilen ekteki <b>Guvenlik_Guncelleme.exe</b> dosyasını indirip çalıştırın.</p>`;
-            } else {
-                body.innerHTML = `<h3>🤖 Discord İki Aşamalı Doğrulama</h3><br><p>Hesabınıza yeni bir konumdan erişim sağlandı. Doğrulama Kodunuz: <b>994-827</b>. Bu kodu kimseyle paylaşmayın.</p>`;
-            }
-        }
-
-        // DOSYA PAYLAŞIMI VE ESKİ SİSTEMLER
-        const folderData = {
-            photos: ["Mezuniyet.jpg", "Yaz_Tatili.jpg", "Setup_Alani.png"],
-            documents: ["Tez_Calismasi.docx", "Sifreler.txt"]
-        };
-        function openFolder(title, key) {
-            let list = `<div style="display:grid; grid-template-columns: repeat(3,1fr); gap:10px; text-align:center; font-size:0.75rem;">`;
-            folderData[key].forEach(f => {
-                list += `<div style="cursor:pointer;" onclick="alert('${f} dosyası şu an açılıyor...')"><div>📁</div><div>${f}</div></div>`;
-            });
-            list += `</div>`;
-            createPopup(title, list, "300px", "auto");
-        }
-
-        // GERİ DÖNÜŞÜM KUTUSU
-        function openTrash() {
-            let list = `<div id="trashBox" style="font-size:0.85rem; width:250px;">`;
-            if(trashItems.length === 0) { list += "<p style='color:#999;'>Çöp Kutusu Boş.</p>"; }
-            else {
-                trashItems.forEach(i => { list += `<div style='margin-bottom:6px;'>🗑️ ${i}</div>`; });
-                list += `<button style='margin-top:10px; width:100%; padding:5px; background:red; color:white; border:none; cursor:pointer;' onclick='emptyTrash()'>Çöpü Boşalt</button>`;
-            }
-            list += `</div>`;
-            createPopup("Geri Dönüşüm Kutusu", list, "auto", "auto");
-        }
-        function emptyTrash() {
-            trashItems = [];
-            document.getElementById('trashBox').innerHTML = "<p style='color:#999;'>Çöp Kutusu Boş.</p>";
-        }
-
-        // VİRÜSLER (WANNA CRY & CREEPER)
-        let timerInterval;
-        function triggerWannaCry() {
-            document.getElementById('wannaCryScreen').style.display = 'block';
-            let duration = 3 * 60 * 60 - 1;
-            timerInterval = setInterval(() => {
-                let hours = Math.floor(duration / 3600).toString().padStart(2, '0');
-                let minutes = Math.floor((duration % 3600) / 60).toString().padStart(2, '0');
-                let seconds = (duration % 60).toString().padStart(2, '0');
-                document.getElementById('wcTimer').textContent = `${hours}:${minutes}:${seconds}`;
-                if (--duration < 0) clearInterval(timerInterval);
-            }, 1000);
-        }
-
-        function triggerCreeper() {
-            isCreeperActive = true;
+        // VİRÜS TETİKLEYİCİ FONKSİYONLAR
+        function activateCreeper() {
+            activeViruses.creeper = true;
             document.getElementById('creeperScreen').style.display = 'flex';
-            document.querySelectorAll('.popup-window').forEach(win => {
-                win.classList.add('shake-effect', 'creeper-tint');
-            });
+            document.querySelectorAll('.popup-window').forEach(w => w.classList.add('shake-effect', 'creeper-tint'));
         }
 
+        function activateMEMZ() {
+            activeViruses.memz = true;
+            document.getElementById('bodyTag').classList.add('memz-active');
+            alert("MEMZ Virüsü Çalıştırıldı! Bilgisayarınız saçmalamaya başlayacak.");
+            // Rastgele pencereler açma çılgınlığı
+            setInterval(() => {
+                if(activeViruses.memz) createPopup("⚠️ MEMZ ERROR", "<h1 style='padding:20px; color:red; text-align:center;'>YOUR COMPUTER IS TOAST</h1>", "250px", "120px");
+            }, 3000);
+        }
+
+        function activateChernobyl() {
+            activeViruses.chernobyl = true;
+            document.querySelectorAll('.win-title').forEach(t => t.textContent = "☢️ CHERNOBYL ENCRYPTED ☢️");
+            alert("Chernobyl (CIH) donanıma saldırmaya başladı! 10 saniye içinde mavi ekran tetiklenecek.");
+            setTimeout(() => {
+                if(activeViruses.chernobyl) triggerBSOD();
+            }, 10000);
+        }
+
+        function activateSpyware() {
+            activeViruses.spyware = true;
+            const alertBox = document.getElementById('spyAlert');
+            alertBox.style.display = 'block';
+            setInterval(() => {
+                if(activeViruses.spyware) {
+                    alertBox.style.transform = `translate(${Math.random()*10}px, ${Math.random()*10}px)`;
+                }
+            }, 100);
+        }
+
+        // MAVİ EKRAN VE TEMİZLİK PROTOKOLÜ
         function triggerBSOD() {
             document.querySelectorAll('.popup-window').forEach(el => el.remove());
             document.getElementById('creeperScreen').style.display = 'none';
+            document.getElementById('spyAlert').style.display = 'none';
+            document.getElementById('bodyTag').className = "";
+            
             const bsod = document.getElementById('bsodScreen');
             bsod.style.display = 'block';
             let p = 0;
             const int = setInterval(() => {
-                p += 5;
+                p += 4;
                 document.getElementById('resetProgress').textContent = p;
-                if(p >= 100) { clearInterval(int); bsod.style.display = 'none'; isCreeperActive = false; }
-            }, 120);
+                if(p >= 100) {
+                    clearInterval(int);
+                    bsod.style.display = 'none';
+                    resetVirusFlags();
+                }
+            }, 100);
         }
 
-        function fixSystem() {
-            clearInterval(timerInterval);
-            document.getElementById('wannaCryScreen').style.display = 'none';
+        function resetVirusFlags() {
+            activeViruses = { creeper: false, memz: false, chernobyl: false, spyware: false };
+        }
+
+        function cleanAll() {
             triggerBSOD();
         }
     </script>
