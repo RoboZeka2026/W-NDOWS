@@ -3,421 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kişisel Bilgisayarım - Ultimate Cyber Security Sandbox</title>
+    <title>SYSTEM OVERRIDE - Cyber Security Horror Sandbox</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Segoe+UI:wght@300;400;600&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
 
     <style>
         * {
             margin: 0; padding: 0; box-sizing: border-box; user-select: none;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier Prime', monospace;
         }
 
         body, html {
             width: 100%; height: 100vh; overflow: hidden;
-            background: url('https://images.pexels.com/photos/1323556/pexels-photo-1323556.jpeg?auto=compress&cs=tinysrgb&w=1920') no-repeat center center fixed;
-            background-size: cover;
-            transition: filter 0.3s;
+            background: #020202;
+            color: #ff3333;
+            transition: filter 0.5s, background 0.5s;
+        }
+
+        /* KARANLIK EFEKT PERDESİ */
+        .ambient-noise {
+            position: fixed; top:0; left:0; width:100vw; height:100vh;
+            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9) 100%);
+            z-index: 9999; pointer-events: none;
         }
 
         /* GİRİŞ OVERLAY */
         .fullscreen-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); z-index: 999999;
-            display: flex; align-items: center; justify-content: center; color: white; text-align: center;
+            background: #000; z-index: 999999;
+            display: flex; align-items: center; justify-content: center; text-align: center;
         }
         .fullscreen-box {
-            background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08); max-width: 550px;
+            max-width: 600px; padding: 30px; border: 1px double #ff3333; background: #050000;
         }
-        .f11-btn { background: #b91c1c; color: white; border: none; padding: 14px 40px; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; margin-top: 20px;}
+        .f11-btn { 
+            background: transparent; color: #ff3333; border: 1px solid #ff3333; 
+            padding: 12px 35px; font-size: 1rem; font-weight: bold; cursor: pointer; 
+            margin-top: 25px; transition: all 0.3s;
+        }
+        .f11-btn:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px #ff3333; }
 
-        /* MASAÜSTÜ GRID */
+        /* MASAÜSTÜ */
         .desktop {
-            width: 100%; height: calc(100vh - 48px); padding: 25px;
-            display: flex; flex-direction: column; gap: 18px; align-content: flex-start; flex-wrap: wrap;
+            width: 100%; height: calc(100vh - 40px); padding: 30px;
+            display: flex; flex-direction: column; gap: 20px; align-content: flex-start; flex-wrap: wrap;
         }
 
         .icon {
-            width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center;
-            cursor: pointer; color: white; font-size: 0.75rem; text-shadow: 0px 2px 5px rgba(0,0,0,0.9);
-            padding: 8px 5px; border-radius: 6px; transition: background 0.2s;
+            width: 130px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            cursor: pointer; color: #ff6666; font-size: 0.8rem;
+            padding: 10px; border: 1px solid transparent; transition: all 0.2s;
         }
-        .icon:hover { background: rgba(255, 255, 255, 0.15); }
-        .icon-img { font-size: 2.3rem; margin-bottom: 6px; filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.4)); }
+        .icon:hover { background: rgba(255, 51, 51, 0.1); border-color: #ff3333; text-shadow: 0 0 5px #ff3333; }
+        .icon-img { font-size: 2rem; margin-bottom: 8px; filter: grayscale(30%); }
 
-        /* WINDOW MEKANİĞİ */
+        /* PROFESSIONAL WINDOW MECHANICS */
         .popup-window {
-            position: absolute; background: white; border: 1px solid rgba(0,0,0,0.15);
-            border-radius: 12px; box-shadow: 0 25px 50px rgba(0,0,0,0.35); z-index: 100; overflow: hidden;
+            position: absolute; background: #080808; border: 1px solid #ff3333;
+            box-shadow: 0 0 30px rgba(255, 51, 51, 0.15); z-index: 100; overflow: hidden;
             display: flex; flex-direction: column;
         }
         .window-header {
-            background: #f6f6f6; padding: 12px 15px; font-size: 0.85rem; font-weight: 600;
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.06);
-            cursor: move;
+            background: #120000; padding: 10px 15px; font-size: 0.8rem; font-weight: bold;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff3333;
+            cursor: move; color: #ff3333;
         }
-        .close-btn { background: #ff5f56; border: none; width: 14px; height: 14px; border-radius: 50%; cursor: pointer; }
-        .window-content { flex: 1; overflow-y: auto; background: #fff;}
+        .close-btn { background: transparent; border: 1px solid #ff3333; color: #ff3333; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem; }
+        .close-btn:hover { background: #ff3333; color: #000; }
+        .window-content { flex: 1; overflow-y: auto; padding: 15px; background: #020202; }
 
-        /* TERMINAL / CMD */
-        .terminal-container { width: 450px; height: 280px; background: #000; color: #00ff00; font-family: 'Courier Prime', monospace; padding: 15px; font-size: 0.82rem; }
-
-        /* KAOS VE VİRÜS EFEKTLERİ */
-        @keyframes memzFlash {
-            0% { filter: invert(0%) hue-rotate(0deg); }
-            50% { filter: invert(100%) hue-rotate(180deg); }
-            100% { filter: invert(0%) hue-rotate(360deg); }
+        /* KORKU / GLITCH ANIMASYONLARI */
+        @keyframes horrorGlitch {
+            0% { transform: translate(0,0) skewX(0deg); filter: hue-rotate(0deg); }
+            10% { transform: translate(-2px, 3px) skewX(-5deg); }
+            20% { transform: translate(3px, -1px) skewX(10deg); filter: invert(10%); }
+            30% { transform: translate(0,0) skewX(0deg); }
+            100% { transform: translate(0,0) skewX(0deg); }
         }
-        .memz-active { animation: memzFlash 0.3s infinite; }
-        
-        @keyframes glitchShake {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(-3px, 2px); }
-            50% { transform: translate(3px, -2px); }
-            75% { transform: translate(-2px, -3px); }
-            100% { transform: translate(2px, 2px); }
-        }
-        .shake-effect { animation: glitchShake 0.1s infinite; }
-        .creeper-tint { background: #021402 !important; color: #00ff00 !important; border: 1px solid #00ff00 !important; }
-        .creeper-tint * { color: #00ff00 !important; background: transparent !important; border-color: #00ff00 !important; }
+        .glitch-active { animation: horrorGlitch 0.4s infinite; background: #200000 !important; }
 
-        /* TOAST BİLDİRİMLER */
+        @keyframes matrixShake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        .shake-active { animation: matrixShake 0.15s infinite; }
+
+        /* BİLDİRİM PANELİ */
         .notification-center {
-            position: fixed; bottom: 60px; right: 20px; display: flex;
-            flex-direction: column; gap: 10px; z-index: 999999; width: 340px;
+            position: fixed; bottom: 55px; right: 20px; display: flex;
+            flex-direction: column; gap: 10px; z-index: 99999; width: 350px;
         }
         .toast {
-            background: rgba(15, 23, 42, 0.95); color: white; border-left: 5px solid #3b82f6;
-            padding: 15px; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            cursor: pointer; transform: translateX(400px); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #0a0000; color: #ff6666; border: 1px solid #ff3333;
+            padding: 15px; box-shadow: 0 0 15px rgba(255,51,51,0.2);
+            cursor: pointer; transform: translateX(420px); transition: transform 0.4s ease;
         }
         .toast.show { transform: translateX(0); }
-        .toast.danger { border-left-color: #ef4444; }
-        .toast.warning { border-left-color: #f59e0b; }
 
-        /* APPS */
-        .app-container { padding: 20px; font-size: 0.9rem; line-height: 1.5; }
-        .google-container { width: 600px; height: 380px; display: flex; flex-direction: column; }
-        .google-nav { display: flex; gap: 10px; padding: 12px; background: #f1f3f4; align-items: center; }
-        .google-search-bar { flex: 1; padding: 8px 18px; border: 1px solid #dfe1e5; border-radius: 24px; outline: none; }
-        
-        .av-container { width: 420px; height: 320px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .av-btn { background: #059669; color: white; border: none; padding: 10px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        /* TERMİNAL VE CHAT */
+        .terminal-box { width: 500px; height: 300px; color: #00ff33; font-size: 0.8rem; line-height: 1.4; }
+        .ai-chat { width: 420px; height: 400px; display: flex; flex-direction: column; }
+        .ai-logs { flex:1; overflow-y:auto; border: 1px solid #ff3333; padding: 10px; margin-bottom: 10px; background:#050000; }
+        .ai-input { background: transparent; border: 1px solid #ff3333; color: #ff6666; padding: 8px; outline: none; }
 
-        /* TAM EKRAN ZARARLI ARAYÜZLERİ */
-        .creeper-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 20, 0, 0.97); z-index: 99998; display: none;
-            flex-direction: column; align-items: center; justify-content: center; color: #00ff00;
+        /* JUMPSCARE VE BAĞLANTI KESİNTİSİ */
+        .jumpscare-overlay {
+            position: fixed; top:0; left:0; width:100vw; height:100vh; background:#ff0000;
+            z-index: 999998; display: none; justify-content: center; align-items: center;
+            color: #000; font-family: 'VT323', monospace; font-size: 8rem; font-weight: bold;
         }
-        .ransom-window {
-            width: 580px; height: 400px; background: #7f0000; color: white; padding: 25px;
-            display: flex; flex-direction: column; justify-content: space-between; border: 4px solid #ff3b30;
-        }
-        .bsod { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0078d4; color: white; z-index: 1000000; padding: 10% 15%; display: none; }
 
         .taskbar {
-            width: 100%; height: 48px; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+            width: 100%; height: 40px; background: #0a0000; border-top: 1px solid #ff3333;
             position: fixed; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 10000;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body id="bodyTag">
 
-    <!-- OVERLAY -->
+    <div class="ambient-noise"></div>
+
+    <!-- GİRİŞ EKRANI -->
     <div class="fullscreen-overlay" id="fullscreenOverlay">
         <div class="fullscreen-box">
-            <h2>☣️ ULTIMATE CYBER SECURITY SANDBOX v7 ☣️</h2>
-            <p>Sistem yükleniyor... Oltalama (Phishing), Sosyal Mühendislik tuzakları, Ransomware, Keylogger ve Klasik Kaos zararlıları sisteme gizlendi. Dikkatli keşfedin.</p>
-            <button class="f11-btn" onclick="startSimulation()">LABORATUVARI AÇ</button>
+            <h2 style="color: #ff3333; letter-spacing: 3px;">[ SYSTEM_OVERRIDE_CONNECTED ]</h2>
+            <p style="margin-top: 15px; font-size: 0.85rem; color: #888; line-height: 1.6;">
+                UYARI: Bu yazılım siber tehditlerin psikolojik etkilerini ve oltalama açıklarını simüle eden profesyonel bir siber korku laboratuvarıdır. Işıkları kapatmanız ve simülasyona odaklanmanız önerilir.
+            </p>
+            <button class="f11-btn" onclick="startHorrorSim()">PROTOKOLÜ BAŞLAT</button>
         </div>
     </div>
 
-    <!-- BİLDİRİM ALANI -->
+    <!-- ANLIK JUMPSCARE KATMANI -->
+    <div class="jumpscare-overlay" id="jumpscare">SYSTEM FAILURE</div>
+
+    <!-- BİLDİRİM MERKEZİ -->
     <div class="notification-center" id="notchBox"></div>
 
-    <!-- MASAÜSTÜ GRID INTERFACE -->
+    <!-- MASAÜSTÜ SİSTEMİ -->
     <div class="desktop" id="desktop">
         
-        <!-- MASUM PROGRAMLAR -->
-        <div class="icon" onclick="openGoogle()">
-            <div class="icon-img">🌐</div>
-            <span class="icon-txt">Google Chrome</span>
+        <!-- PROTOKOLLER / MASUM GÖRÜNÜMLÜ TUZAKLAR -->
+        <div class="icon" onclick="openTerminal()">
+            <div class="icon-img">💻</div>
+            <span class="icon-txt">Core_Terminal.sh</span>
         </div>
 
-        <div class="icon" onclick="openAV()">
-            <div class="icon-img">🛡️</div>
-            <span class="icon-txt">Anti-Virus Center</span>
+        <div class="icon" onclick="openHorrorAI()">
+            <div class="icon-img">👁️</div>
+            <span class="icon-txt">The_Overseer.ai</span>
         </div>
 
-        <!-- 🪤 GİZLENMİŞ SİBER TEHDİTLER VE PHISHING TUZAKLARI -->
-        
-        <!-- TUZAK 1: RANSOMWARE (Ücretsiz Araç İllüzyonu) -->
-        <div class="icon" onclick="activateRansomware()">
-            <div class="icon-img">🚀</div>
-            <span class="icon-txt">Internet_Hizlandirici_Pro.exe</span>
+        <div class="icon" onclick="triggerTrap('ransom')">
+            <div class="icon-img">💾</div>
+            <span class="icon-txt">Decrypter_Tool.exe</span>
         </div>
 
-        <!-- TUZAK 2: KEYLOGGER (Oyun Hilesi / Bedava VP Çekiciliği) -->
-        <div class="icon" onclick="activateKeylogger()">
-            <div class="icon-img">💎</div>
-            <span class="icon-txt">Valorant_Bedava_VP_Hilesi.exe</span>
+        <div class="icon" onclick="triggerTrap('glitch')">
+            <div class="icon-img">📁</div>
+            <span class="icon-txt">Sızdırılan_Veriler.pkg</span>
         </div>
 
-        <!-- TUZAK 3: SPYWARE (Merak ve Magazin Unsuru) -->
-        <div class="icon" onclick="activateSpyware()">
-            <div class="icon-img">🤐</div>
-            <span class="icon-txt">Sızdırılan_Gizli_Fotoğraflar.zip</span>
-        </div>
-
-        <!-- TUZAK 4: CHERNOBYL (Korku ve Resmi Kurum İllüzyonu) -->
-        <div class="icon" onclick="activateChernobyl()">
-            <div class="icon-img">📄</div>
-            <span class="icon-txt">Gecikmiş_Vergi_Borcu.pdf</span>
-        </div>
-
-        <!-- TUZAK 5: MEMZ (Popüler Oyun Beklentisi) -->
-        <div class="icon" onclick="activateMEMZ()">
-            <div class="icon-img">🎮</div>
-            <span class="icon-txt">GTA_6_Beta_Setup.exe</span>
-        </div>
-
-        <!-- TUZAK 6: CREEPER (Kritik Altyapı İllüzyonu) -->
-        <div class="icon" onclick="activateCreeper()">
+        <div class="icon" onclick="triggerTrap('ghost')">
             <div class="icon-img">⚙️</div>
-            <span class="icon-txt">Windows_Kritik_Guncelleme.exe</span>
+            <span class="icon-txt">Sistem_Hizlandirici.sys</span>
+        </div>
+
+        <div class="icon" onclick="resetSystem()">
+            <div class="icon-img">🛡️</div>
+            <span class="icon-txt">Emergency_Purge.bat</span>
         </div>
 
     </div>
 
-    <!-- CREEPER EKRANI -->
-    <div class="creeper-screen" id="creeperScreen">
-        <h1 style="font-family:'VT323'; font-size:5rem;">I'M THE CREEPER...</h1>
-        <h2 style="font-family:'VT323'; font-size:3rem; margin-bottom:20px;">CATCH ME IF YOU CAN!</h2>
-        <p style="color:red; text-decoration:underline; cursor:pointer;" onclick="cleanAll()">[ EMERGENCY SYSTEM REBOOT ]</p>
-    </div>
-
-    <!-- GÖREV ÇUBUĞU -->
+    <!-- ALT GÖREV ÇUBUĞU -->
     <div class="taskbar">
-        <button style="background:transparent; border:none; font-size:1.3rem; cursor:pointer;">🪟</button>
-        <div style="color:white; font-size:0.8rem; text-align:right;"><div id="clock">00:00<br>05.07.2026</div></div>
-    </div>
-
-    <!-- MAVİ EKRAN ARAYÜZÜ -->
-    <div class="bsod" id="bsodScreen">
-        <div style="font-size:6rem;">:(</div>
-        <h1>Kritik Güvenlik İhlali! Temizlik Filtresi Çalıştırılıyor.</h1>
-        <p>Zararlı yazılımlar sistem bellek alanından temizleniyor... (<span id="resetProgress">0</span>%)</p>
+        <div>STATUS: <span style="color: #00ff33;" id="sysStatus">SECURE</span></div>
+        <div id="clock">00:00:00</div>
     </div>
 
     <script>
-        let activeViruses = { creeper: false, memz: false, chernobyl: false, spyware: false, ransomware: false, keylogger: false };
-        let loggedKeys = [];
+        let isAnomaliesActive = false;
+        let ghostTypingInterval = null;
 
-        function startSimulation() {
+        function startHorrorSim() {
             if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
             document.getElementById('fullscreenOverlay').style.display = 'none';
             
-            // Oltalama Bildirim Akışı (Sosyal Mühendislik Tetikleyicileri)
-            setTimeout(() => spawnNotification("📦 KARGO TAKİP UYARISI", "Kargonuz adres yetersizliği nedeniyle teslim edilemedi! Bilgileri güncellemek için tıklayın.", true, activateRansomware), 4000);
-            setTimeout(() => spawnNotification("🔥 OYUN KAMPANYASI", "Sınırlı Süre! Bedava 5000 VP kazanmak için Valorant_Bedava_VP_Hilesi.exe dosyasını açın!", false, activateKeylogger), 9000);
-            setTimeout(() => spawnNotification("⚠️ Windows Defender", "Kritik sistem zayıflığı algılandı. Düzeltmek için Windows_Kritik_Guncelleme.exe dosyasını çalıştırın.", false, activateCreeper), 15000);
+            // Profesyonel zaman ayarlı sahte bildirim döngüsü (Psikolojik Baskı)
+            setTimeout(() => spawnHorrorToast("SİSTEM UYARISI", "Arka planda bilinmeyen bir port üzerinden veri akışı tespit edildi. Core_Terminal.sh dosyasını inceleyin."), 3000);
+            setTimeout(() => spawnHorrorToast("KRİTİK HATA", "The_Overseer.ai yetkilerini genişletti. Dosya erişimleri kısıtlanıyor olabilir.", true), 8000);
+            
+            // Arka planda rastgele glitch tetikleme (Rastgele Korku Elementi)
+            setInterval(() => {
+                if(Math.random() > 0.7) {
+                    document.body.style.filter = "invert(100%) cubic-bezier(.1,.9,.2,1)";
+                    setTimeout(() => document.body.style.filter = "none", 150);
+                }
+            }, 5000);
         }
 
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerHTML = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}<br>${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
+            document.getElementById('clock').textContent = now.toTimeString().split(' ')[0];
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // KLAVYE DİNLEME (KEYLOGGER ALGORİTMASI)
-        document.addEventListener('keydown', (e) => {
-            if(activeViruses.keylogger && e.key.length === 1) {
-                loggedKeys.push(e.key);
-                const logBox = document.getElementById('cmdLogs');
-                if(logBox) {
-                    logBox.innerHTML += `[KEYLOGGED]: '${e.key}' tuşuna basıldı. Sızdırılıyor...<br>`;
-                    logBox.scrollTop = logBox.scrollHeight;
-                }
-            }
-        });
-
-        // TOAST DİNAMİK BİLDİRİM MOTORU
-        function spawnNotification(title, msg, isDanger, clickAction) {
+        // SAHTE KORKU BİLDİRİMLERİ
+        function spawnHorrorToast(title, msg, isUrgent) {
             const notchBox = document.getElementById('notchBox');
             const toast = document.createElement('div');
-            toast.className = `toast ${isDanger ? 'danger' : 'warning'}`;
-            toast.innerHTML = `<strong>${title}</strong><p style="font-size:0.75rem; margin-top:4px; opacity:0.9;">${msg}</p>`;
+            toast.className = 'toast';
+            if(isUrgent) toast.style.borderColor = "#ff0000";
+            toast.innerHTML = `<strong>[ ${title} ]</strong><p style="font-size:0.75rem; margin-top:5px; color:#aaa;">${msg}</p>`;
             
-            toast.onclick = () => { toast.remove(); clickAction(); };
+            toast.onclick = () => { toast.remove(); executeJumpscare(); };
             notchBox.appendChild(toast);
             setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => { if(toast.parentNode) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); } }, 8000);
+            setTimeout(() => { if(toast.parentNode) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); } }, 7000);
         }
 
-        // PENCERE ÜRETİCİSİ
-        function createPopup(title, contentHTML, width, height) {
+        // PROFESSIONAL WINDOW FACTORY
+        function createHorrorWindow(title, contentHTML, width, height) {
             const desktop = document.getElementById('desktop');
             const win = document.createElement('div');
-            win.className = `popup-window`;
-            
-            if(activeViruses.creeper) win.className += " shake-effect creeper-tint";
-            if(activeViruses.chernobyl) title = "☢️ SYSTEM CORE MELTDOWN ☢️";
-
+            win.className = 'popup-window';
             win.style.width = width; win.style.height = height;
-            win.style.left = `${120 + Math.random() * 180}px`; win.style.top = `${70 + Math.random() * 90}px`;
+            win.style.left = `${150 + Math.random() * 150}px`; win.style.top = `${80 + Math.random() * 80}px`;
 
             win.innerHTML = `
                 <div class="window-header">
                     <span>${title}</span>
-                    <button class="close-btn" onclick="this.parentElement.parentElement.remove()">✕</button>
+                    <button class="close-btn" onclick="this.parentElement.parentElement.remove()">X</button>
                 </div>
                 <div class="window-content">${contentHTML}</div>
             `;
             desktop.appendChild(win);
 
-            let isDragging = false, posX = 0, posY = 0;
-            win.querySelector('.window-header').onmousedown = (e) => {
-                isDragging = true;
-                posX = e.clientX - win.offsetLeft; posY = e.clientY - win.offsetTop;
-            };
-            document.onmousemove = (e) => {
-                if (isDragging) { win.style.left = (e.clientX - posX) + 'px'; win.style.top = (e.clientY - posY) + 'px'; }
-            };
-            document.onmouseup = () => isDragging = false;
+            // Drag and Drop
+            let dragging = false, x = 0, y = 0;
+            win.querySelector('.window-header').onmousedown = (e) => { dragging = true; x = e.clientX - win.offsetLeft; y = e.clientY - win.offsetTop; };
+            document.onmousemove = (e) => { if(dragging) { win.style.left = (e.clientX - x) + 'px'; win.style.top = (e.clientY - y) + 'px'; } };
+            document.onmouseup = () => dragging = false;
 
-            if (activeViruses.memz) {
-                setInterval(() => {
-                    win.style.left = `${Math.random() * (window.innerWidth - 300)}px`;
-                    win.style.top = `${Math.random() * (window.innerHeight - 300)}px`;
-                }, 600);
-            }
             return win;
         }
 
-        // CHROME
-        function openGoogle() {
+        // TERMİNAL (LOG AKIŞI)
+        function openTerminal() {
             const html = `
-                <div class="google-container">
-                    <div class="google-nav">
-                        <span style="color:#4285F4;font-weight:bold;">Google</span>
-                        <input type="text" class="google-search-bar" placeholder="Buraya yazacağınız her harf keylogger'a düşebilir...">
-                    </div>
-                    <div class="app-container"><p style="color:#666; text-align:center;">Şifre veya hassas verilerinizi yazarak tuzağı test edin.</p></div>
+                <div class="terminal-box" id="termLogs">
+                    [SYSTEM]: Kernel initialization... OK<br>
+                    [SYSTEM]: Netstat monitoring interface loaded.<br>
+                    [WARNING]: Unknown PID (4492) manipulating system directory.<br>
                 </div>
             `;
-            createPopup("Google Chrome", html, "auto", "auto");
+            createHorrorWindow("Core_Terminal.sh", html, "auto", "auto");
         }
 
-        // ANTIVIRUS CENTER
-        function openAV() {
-            let list = "<ul>";
-            for(let v in activeViruses) { list += `<li>${v.toUpperCase()}: ${activeViruses[v] ? "<b style='color:red;'>ENFEKTE</b>" : "<b style='color:green;'>TEMİZ</b>"}</li>`; }
-            list += "</ul>";
-            createPopup("Anti-Virus Center", `<div class="av-container"><h3>🛡️ Sandbox Güvenlik Matrisi</h3><div style="background:#020617; padding:10px; border-radius:4px; font-family:monospace; font-size:0.8rem; margin:10px 0;">${list}</div><button class="av-btn" onclick="cleanAll()">Tüm Zararlıları Karantinaya Al</button></div>`, "auto", "auto");
-        }
-
-        // 🚨 VİRÜS TETİKLEYİCİLERİ VE PASİF SÜREÇLER
-        
-        function activateRansomware() {
-            if(activeViruses.ransomware) return;
-            activeViruses.ransomware = true;
-            
-            // Masaüstündeki tüm ikonların ismini kilitle (.locked uzantısı)
-            document.querySelectorAll('.icon-txt').forEach(txt => {
-                txt.textContent = txt.textContent + ".locked";
-                txt.style.color = "#ff8888";
-            });
-
+        // INTERAKTIF OVERSEER AI
+        function openHorrorAI() {
             const html = `
-                <div class="ransom-window">
-                    <div>
-                        <h2>🔒 CRYPTOLOCKER RANSOMWARE v2.0</h2>
-                        <p style="margin-top:10px; font-size:0.85rem; opacity:0.9;">Masaüstünüzdeki tüm programlar, fotoğraflar ve veriler şu andan itibaren AES-256 algoritması ile şifrelenmiştir. Kilitleri açmak için belirtilen adrese fidye ödemeniz gerekmektedir.</p>
+                <div class="ai-chat">
+                    <div class="ai-logs" id="aiLogs">
+                        <div>[SYSTEM]: Arayüz aktif. Algoritmaya bir soru yöneltin.</div>
                     </div>
-                    <div style="background:rgba(0,0,0,0.4); padding:10px; font-family:monospace; font-size:0.75rem;">
-                        Cüzdan Adresi: bc1qxy2kgdygjrsqtzq2n0yrf2493p83kk...
-                    </div>
-                    <p style="color:#ffcc00; font-weight:bold; font-size:0.8rem;">(İpucu: Kurtulmak için Anti-Virus Center üzerinden temizleme başlatın!)</p>
+                    <input type="text" class="ai-input" id="aiInp" placeholder="Komut veya soru girin..." onkeydown="handleAI(event)">
                 </div>
             `;
-            createPopup("🚨 FİDYE YAZILIMI UYARISI 🚨", html, "auto", "auto");
+            createHorrorWindow("The_Overseer.ai", html, "auto", "auto");
         }
 
-        function activateKeylogger() {
-            if(activeViruses.keylogger) return;
-            activeViruses.keylogger = true;
+        function handleAI(e) {
+            if(e.key === 'Enter') {
+                const logs = document.getElementById('aiLogs');
+                logs.innerHTML += `<div style="color:#ff6666;">> ${e.target.value}</div>`;
+                const val = e.target.value.toLowerCase();
+                e.target.value = "";
 
-            const html = `
-                <div class="terminal-container" id="cmdLogs">
-                    [+] Keylogger modülü kernel alanına enjekte edildi.<br>
-                    [+] Hacker C2 Sunucusu Bağlantısı: BAŞARILI.<br>
-                    [+] Dinleme mod modu aktif. Klavyeden veri girilmesi bekleniyor...<br><br>
-                </div>
-            `;
-            createPopup("C:\\Windows\\system32\\cmd.exe (Gizli Keylogger İzleyici)", html, "auto", "auto");
+                let response = "İstek anlaşılamadı. Algoritma izlemeye devam ediyor.";
+                if(val.includes("kimsin")) response = "Ben bu sistemdeki dijital ayak iziyim. Her tıklamanı, her hatanı kaydediyorum.";
+                if(val.includes("virüs") || val.includes("hacker")) response = "Sızma zaten tamamlandı. Güvenlik duvarını içeriden indiren sendin.";
+
+                setTimeout(() => { logs.innerHTML += `<div style="color:#ff3333;">[OVERSEER]: ${response}</div>`; logs.scrollTop = logs.scrollHeight; }, 500);
+            }
         }
 
-        function activateSpyware() {
-            if(activeViruses.spyware) return;
-            activeViruses.spyware = true;
-            setInterval(() => {
-                if(activeViruses.spyware) spawnNotification("🕵️‍♂️ Spyware.Trojan", "Arka planda veri paketi transfer ediliyor: Kredi kartı logları sızdırıldı!", true, () => {});
-            }, 6000);
-        }
+        // SOSYAL MÜHENDİSLİK VE TUZAK SİMÜLASYONLARI
+        function triggerTrap(type) {
+            document.getElementById('sysStatus').textContent = "COMPROMISED";
+            document.getElementById('sysStatus').style.color = "#ff3333";
 
-        function activateChernobyl() {
-            activeViruses.chernobyl = true;
-            setTimeout(() => { if(activeViruses.chernobyl) triggerBSOD(); }, 7000);
-        }
-
-        function activateMEMZ() {
-            activeViruses.memz = true;
-            document.getElementById('bodyTag').classList.add('memz-active');
-            setInterval(() => { if(activeViruses.memz) createPopup("👾 MEMZ Tüneli", "<h2 style='color:red; text-align:center; padding:20px;'>SİSTEM ÇÖKÜYOR</h2>", "250px", "100px"); }, 3000);
-        }
-
-        function activateCreeper() {
-            activeViruses.creeper = true;
-            document.getElementById('creeperScreen').style.display = 'flex';
-            document.querySelectorAll('.popup-window').forEach(w => w.classList.add('shake-effect', 'creeper-tint'));
-        }
-
-        // TEMİZLİK PROTOKOLÜ VE REBOOT
-        function triggerBSOD() {
-            document.querySelectorAll('.popup-window').forEach(el => el.remove());
-            document.getElementById('creeperScreen').style.display = 'none';
-            document.getElementById('bodyTag').className = "";
-            document.getElementById('notchBox').innerHTML = "";
-            
-            // İkon isimlerini eski haline getir
-            document.querySelectorAll('.icon-txt').forEach(txt => {
-                if(txt.textContent.endsWith(".locked")) {
-                    txt.textContent = txt.textContent.replace(".locked", "");
-                    txt.style.color = "white";
+            if(type === 'ransom') {
+                // Ransomware Modu: İkon isimlerini bozup ekranda parazit açma
+                document.querySelectorAll('.icon-txt').forEach(t => t.textContent = "SYSTEM_ERROR.locked");
+                createHorrorWindow("🚨 CRYPTO_CORRUPTION 🚨", `
+                    <div style="padding:10px; color:#ff3333; line-height:1.6;">
+                        <h2>Sistem Şifreleme Protokolü Tetiklendi</h2>
+                        <p style="margin-top:10px; font-size:0.8rem; color:#888;">Sosyal mühendislik açığı başarıyla simüle edildi. Kullanıcı güvensiz bir ikona manuel onay verdi. Çekirdek verileri donduruldu.</p>
+                    </div>
+                `, "400px", "auto");
+            } 
+            else if(type === 'glitch') {
+                // Glitch Modu: Tüm pencerelerin delirmesi
+                document.querySelectorAll('.popup-window').forEach(w => w.classList.add('glitch-active', 'shake-active'));
+                spawnHorrorToast("BELLEK TAŞMASI", "Buffer overflow simülasyonu çalışıyor. Pencereler kilitlendi.", true);
+            } 
+            else if(type === 'ghost') {
+                // Ghost Typing Modu: Terminale sızma
+                openTerminal();
+                const term = document.getElementById('termLogs');
+                if(term) {
+                    let msg = "  [HACKER_CONNECTED]: Veri havuzuna erişim sağlandı. Sisteminiz tamamen izleniyor. Çıkış yapamazsınız.";
+                    let i = 0;
+                    clearInterval(ghostTypingInterval);
+                    ghostTypingInterval = setInterval(() => {
+                        term.innerHTML += msg[i];
+                        i++;
+                        if(i >= msg.length) clearInterval(ghostTypingInterval);
+                    }, 50);
                 }
-            });
-
-            const bsod = document.getElementById('bsodScreen');
-            bsod.style.display = 'block';
-            let p = 0;
-            const int = setInterval(() => {
-                p += 5;
-                document.getElementById('resetProgress').textContent = p;
-                if(p >= 100) {
-                    clearInterval(int);
-                    bsod.style.display = 'none';
-                    activeViruses = { creeper: false, memz: false, chernobyl: false, spyware: false, ransomware: false, keylogger: false };
-                    loggedKeys = [];
-                }
-            }, 100);
+            }
         }
 
-        function cleanAll() {
-            triggerBSOD();
+        // JUMPSCARE TETİKLEYİCİSİ
+        function executeJumpscare() {
+            const js = document.getElementById('jumpscare');
+            js.style.display = 'flex';
+            document.body.style.filter = "glitch-active";
+            setTimeout(() => {
+                js.style.display = 'none';
+                document.body.style.filter = "none";
+                resetSystem();
+            }, 1200);
+        }
+
+        // ACİL DURUM TEMİZLİĞİ
+        function resetSystem() {
+            document.querySelectorAll('.popup-window').forEach(w => w.remove());
+            clearInterval(ghostTypingInterval);
+            document.getElementById('sysStatus').textContent = "SECURE";
+            document.getElementById('sysStatus').style.color = "#00ff33";
+            
+            // İkonları eski haline getir
+            const originalNames = ["Core_Terminal.sh", "The_Overseer.ai", "Decrypter_Tool.exe", "Sızdırılan_Veriler.pkg", "Sistem_Hizlandirici.sys", "Emergency_Purge.bat"];
+            document.querySelectorAll('.icon-txt').forEach((t, index) => {
+                t.textContent = originalNames[index];
+            });
+            
+            alert("[EMERGENCY PURGE]: Sistem güvenli duruma getirildi. Tüm yapay sızıntılar temizlendi.");
         }
     </script>
 </body>
