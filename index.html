@@ -3,211 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM OVERRIDE - Cyber Security Horror Sandbox</title>
+    <title>⚠️ MALWARE_CORE_REPLICATOR // BREACH_DETECTED</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 
     <style>
         * {
             margin: 0; padding: 0; box-sizing: border-box; user-select: none;
-            font-family: 'Courier Prime', monospace;
+            font-family: 'Share Tech Mono', monospace;
         }
 
         body, html {
             width: 100%; height: 100vh; overflow: hidden;
-            background: #020202;
-            color: #ff3333;
-            transition: filter 0.5s, background 0.5s;
+            background: #020000; color: #ff2222; position: relative;
         }
 
-        /* KARANLIK EFEKT PERDESİ */
-        .ambient-noise {
-            position: fixed; top:0; left:0; width:100vw; height:100vh;
-            background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9) 100%);
+        /* CRT MONİTÖR VE PARAZİT TEKSTÜRÜ */
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 99999; background-size: 100% 4px, 6px 100%; pointer-events: none;
+        }
+
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.95) 100%);
             z-index: 9999; pointer-events: none;
         }
 
-        /* GİRİŞ OVERLAY */
-        .fullscreen-overlay {
+        /* GİRİŞ EKRANI */
+        .intro-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; z-index: 999999;
-            display: flex; align-items: center; justify-content: center; text-align: center;
+            background: #000; z-index: 999999; display: flex; align-items: center; justify-content: center;
         }
-        .fullscreen-box {
-            max-width: 600px; padding: 30px; border: 1px double #ff3333; background: #050000;
+        .intro-box {
+            max-width: 650px; padding: 40px; border: 1px solid #ff1111; background: #050000;
+            box-shadow: 0 0 30px rgba(255,0,0,0.2); text-align: center;
         }
-        .f11-btn { 
-            background: transparent; color: #ff3333; border: 1px solid #ff3333; 
-            padding: 12px 35px; font-size: 1rem; font-weight: bold; cursor: pointer; 
-            margin-top: 25px; transition: all 0.3s;
+        .start-btn {
+            background: transparent; color: #ff1111; border: 1px solid #ff1111;
+            padding: 15px 40px; font-size: 1.1rem; cursor: pointer; margin-top: 30px;
+            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s;
         }
-        .f11-btn:hover { background: #ff3333; color: #000; box-shadow: 0 0 15px #ff3333; }
+        .start-btn:hover { background: #ff1111; color: #000; box-shadow: 0 0 20px #ff1111; }
 
-        /* MASAÜSTÜ */
+        /* MASAÜSTÜ GRID */
         .desktop {
-            width: 100%; height: calc(100vh - 40px); padding: 30px;
-            display: flex; flex-direction: column; gap: 20px; align-content: flex-start; flex-wrap: wrap;
+            width: 100%; height: calc(100vh - 45px); padding: 40px;
+            display: flex; flex-direction: column; gap: 25px; align-content: flex-start; flex-wrap: wrap;
         }
 
         .icon {
-            width: 130px; display: flex; flex-direction: column; align-items: center; text-align: center;
-            cursor: pointer; color: #ff6666; font-size: 0.8rem;
-            padding: 10px; border: 1px solid transparent; transition: all 0.2s;
+            width: 140px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            cursor: pointer; color: #ff5555; font-size: 0.85rem; padding: 12px;
+            border: 1px solid transparent; transition: all 0.2s;
         }
-        .icon:hover { background: rgba(255, 51, 51, 0.1); border-color: #ff3333; text-shadow: 0 0 5px #ff3333; }
-        .icon-img { font-size: 2rem; margin-bottom: 8px; filter: grayscale(30%); }
+        .icon:hover { background: rgba(255, 17, 17, 0.08); border-color: #ff1111; text-shadow: 0 0 8px #ff1111; }
+        .icon-img { font-size: 2.2rem; margin-bottom: 10px; filter: drop-shadow(0 0 5px rgba(255,0,0,0.5)); }
 
-        /* PROFESSIONAL WINDOW MECHANICS */
+        /* PROFESYONEL PENCDERE SİSTEMİ */
         .popup-window {
-            position: absolute; background: #080808; border: 1px solid #ff3333;
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.15); z-index: 100; overflow: hidden;
-            display: flex; flex-direction: column;
+            position: absolute; background: #050505; border: 1px solid #ff1111;
+            box-shadow: 0 0 40px rgba(255, 17, 17, 0.15); z-index: 100; overflow: hidden;
+            display: flex; flex-direction: column; min-width: 300px;
         }
         .window-header {
-            background: #120000; padding: 10px 15px; font-size: 0.8rem; font-weight: bold;
-            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff3333;
-            cursor: move; color: #ff3333;
+            background: #150000; padding: 12px 18px; font-size: 0.85rem; font-weight: bold;
+            display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ff1111;
+            cursor: move; letter-spacing: 1px;
         }
-        .close-btn { background: transparent; border: 1px solid #ff3333; color: #ff3333; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem; }
-        .close-btn:hover { background: #ff3333; color: #000; }
-        .window-content { flex: 1; overflow-y: auto; padding: 15px; background: #020202; }
+        .close-btn { background: transparent; border: 1px solid #ff1111; color: #ff1111; width: 22px; height: 22px; cursor: pointer; }
+        .close-btn:hover { background: #ff1111; color: #000; }
+        .window-content { flex: 1; overflow-y: auto; padding: 20px; background: #010101; }
 
-        /* KORKU / GLITCH ANIMASYONLARI */
-        @keyframes horrorGlitch {
-            0% { transform: translate(0,0) skewX(0deg); filter: hue-rotate(0deg); }
-            10% { transform: translate(-2px, 3px) skewX(-5deg); }
-            20% { transform: translate(3px, -1px) skewX(10deg); filter: invert(10%); }
-            30% { transform: translate(0,0) skewX(0deg); }
-            100% { transform: translate(0,0) skewX(0deg); }
-        }
-        .glitch-active { animation: horrorGlitch 0.4s infinite; background: #200000 !important; }
+        /* TERMİNAL & SOHBET ALANLARI */
+        .terminal-feed { width: 550px; height: 320px; color: #00ff33; font-family: 'Courier Prime', monospace; font-size: 0.8rem; line-height: 1.5; }
+        .overseer-chat { width: 450px; height: 420px; display: flex; flex-direction: column; }
+        .chat-logs { flex: 1; border: 1px solid #ff1111; background: #030000; padding: 15px; overflow-y: auto; margin-bottom: 15px; font-size: 0.85rem; }
+        .chat-input { background: transparent; border: 1px solid #ff1111; color: #ff5555; padding: 10px; outline: none; }
 
-        @keyframes matrixShake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(0px, 2px) rotate(0deg); }
-            100% { transform: translate(0px, 0px) rotate(0deg); }
-        }
-        .shake-active { animation: matrixShake 0.15s infinite; }
-
-        /* BİLDİRİM PANELİ */
+        /* BİLDİRİMLER (TOASTS) */
         .notification-center {
-            position: fixed; bottom: 55px; right: 20px; display: flex;
-            flex-direction: column; gap: 10px; z-index: 99999; width: 350px;
+            position: fixed; bottom: 60px; right: 20px; display: flex;
+            flex-direction: column; gap: 12px; z-index: 99999; width: 360px;
         }
         .toast {
-            background: #0a0000; color: #ff6666; border: 1px solid #ff3333;
-            padding: 15px; box-shadow: 0 0 15px rgba(255,51,51,0.2);
-            cursor: pointer; transform: translateX(420px); transition: transform 0.4s ease;
+            background: #080000; color: #ff4444; border: 1px solid #ff1111;
+            padding: 18px; box-shadow: 0 0 20px rgba(255,17,17,0.2);
+            cursor: pointer; transform: translateX(450px); transition: transform 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
         .toast.show { transform: translateX(0); }
 
-        /* TERMİNAL VE CHAT */
-        .terminal-box { width: 500px; height: 300px; color: #00ff33; font-size: 0.8rem; line-height: 1.4; }
-        .ai-chat { width: 420px; height: 400px; display: flex; flex-direction: column; }
-        .ai-logs { flex:1; overflow-y:auto; border: 1px solid #ff3333; padding: 10px; margin-bottom: 10px; background:#050000; }
-        .ai-input { background: transparent; border: 1px solid #ff3333; color: #ff6666; padding: 8px; outline: none; }
+        /* GLITCH & HAREKET ANIMASYONLARI */
+        @keyframes masterGlitch {
+            0% { transform: translate(0,0) skewX(0deg); }
+            5% { transform: translate(-3px, 2px) skewX(-4deg); filter: invert(20%); }
+            10% { transform: translate(3px, -2px) skewX(4deg); }
+            15% { transform: translate(0,0) skewX(0deg); }
+            100% { transform: translate(0,0) skewX(0deg); }
+        }
+        .glitch-active { animation: masterGlitch 0.3s infinite; }
 
-        /* JUMPSCARE VE BAĞLANTI KESİNTİSİ */
-        .jumpscare-overlay {
-            position: fixed; top:0; left:0; width:100vw; height:100vh; background:#ff0000;
-            z-index: 999998; display: none; justify-content: center; align-items: center;
-            color: #000; font-family: 'VT323', monospace; font-size: 8rem; font-weight: bold;
+        @keyframes rawShake {
+            0% { transform: translate(2px, 1px); }
+            50% { transform: translate(-2px, -1px); }
+            100% { transform: translate(1px, 2px); }
+        }
+        .shake-active { animation: rawShake 0.1s infinite; }
+
+        /* GÖZ TAKİP SİLÜETİ */
+        .eye-stalker {
+            position: fixed; top: 30px; right: 40px; width: 100px; height: 100px;
+            border: 1px dashed rgba(255,0,0,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; pointer-events: none;
+        }
+        .pupil { width: 16px; height: 16px; background: #ff1111; border-radius: 50%; box-shadow: 0 0 15px #ff1111; transition: transform 0.1s ease-out; }
+
+        /* RED SCREEN OF DEATH (ÇÖKME EKRANI) */
+        .rsod {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #550000; color: #fff; z-index: 1000000; padding: 10% 15%; display: none;
+            font-family: 'Courier Prime', monospace; box-shadow: inset 0 0 100px #000;
         }
 
+        /* ALT ÇUBUK */
         .taskbar {
-            width: 100%; height: 40px; background: #0a0000; border-top: 1px solid #ff3333;
-            position: fixed; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 10000;
-            font-size: 0.8rem;
+            width: 100%; height: 45px; background: #080000; border-top: 1px solid #ff1111;
+            position: fixed; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 25px; z-index: 10000;
+            font-size: 0.85rem; letter-spacing: 1px;
         }
     </style>
 </head>
 <body id="bodyTag">
 
-    <div class="ambient-noise"></div>
+    <div class="vignette"></div>
 
-    <!-- GİRİŞ EKRANI -->
-    <div class="fullscreen-overlay" id="fullscreenOverlay">
-        <div class="fullscreen-box">
-            <h2 style="color: #ff3333; letter-spacing: 3px;">[ SYSTEM_OVERRIDE_CONNECTED ]</h2>
-            <p style="margin-top: 15px; font-size: 0.85rem; color: #888; line-height: 1.6;">
-                UYARI: Bu yazılım siber tehditlerin psikolojik etkilerini ve oltalama açıklarını simüle eden profesyonel bir siber korku laboratuvarıdır. Işıkları kapatmanız ve simülasyona odaklanmanız önerilir.
+    <!-- GİRİŞ SİMÜLASYON EKRANI -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-box">
+            <h1 style="letter-spacing: 4px; font-size: 1.8rem; text-shadow: 0 0 10px #ff1111;">[ HAZARD_ENVIRONMENT_LOADED ]</h1>
+            <p style="margin-top: 20px; font-size: 0.85rem; color: #8a8888; line-height: 1.6; font-family: 'Courier Prime', monospace;">
+                DİKKAT: Bu sistem, siber saldırıların ve truva atlarının işletim sistemi kabukları üzerindeki yıkıcı etkilerini görselleştiren yüksek riskli bir simülatördür. Kalp rahatsızlığı olanların dikkatli olması önerilir.
             </p>
-            <button class="f11-btn" onclick="startHorrorSim()">PROTOKOLÜ BAŞLAT</button>
+            <button class="start-btn" onclick="initSimulation()">SİSTEMİ ENJEKTE ET</button>
         </div>
     </div>
 
-    <!-- ANLIK JUMPSCARE KATMANI -->
-    <div class="jumpscare-overlay" id="jumpscare">SYSTEM FAILURE</div>
+    <!-- CANLI FARE TAKİP EDEN GÖZ -->
+    <div class="eye-stalker">
+        <div class="pupil" id="eyePupil"></div>
+    </div>
 
     <!-- BİLDİRİM MERKEZİ -->
     <div class="notification-center" id="notchBox"></div>
 
-    <!-- MASAÜSTÜ SİSTEMİ -->
+    <!-- MASAÜSTÜ CODESMITH -->
     <div class="desktop" id="desktop">
         
-        <!-- PROTOKOLLER / MASUM GÖRÜNÜMLÜ TUZAKLAR -->
         <div class="icon" onclick="openTerminal()">
             <div class="icon-img">💻</div>
             <span class="icon-txt">Core_Terminal.sh</span>
         </div>
 
-        <div class="icon" onclick="openHorrorAI()">
+        <div class="icon" onclick="openOverseer()">
             <div class="icon-img">👁️</div>
             <span class="icon-txt">The_Overseer.ai</span>
         </div>
 
-        <div class="icon" onclick="triggerTrap('ransom')">
+        <div class="icon" onclick="triggerBreach('ransomware')">
+            <div class="icon-img">☣️</div>
+            <span class="icon-txt">Rootkit_Bypass.exe</span>
+        </div>
+
+        <div class="icon" onclick="triggerBreach('glitch')">
             <div class="icon-img">💾</div>
-            <span class="icon-txt">Decrypter_Tool.exe</span>
+            <span class="icon-txt">DeepWeb_Breach.bin</span>
         </div>
 
-        <div class="icon" onclick="triggerTrap('glitch')">
-            <div class="icon-img">📁</div>
-            <span class="icon-txt">Sızdırılan_Veriler.pkg</span>
+        <div class="icon" onclick="triggerBreach('ghost')">
+            <div class="icon-img">🛰️</div>
+            <span class="icon-txt">Proxy_Overload.sys</span>
         </div>
 
-        <div class="icon" onclick="triggerTrap('ghost')">
-            <div class="icon-img">⚙️</div>
-            <span class="icon-txt">Sistem_Hizlandirici.sys</span>
-        </div>
-
-        <div class="icon" onclick="resetSystem()">
+        <div class="icon" onclick="purgeAllThreats()">
             <div class="icon-img">🛡️</div>
             <span class="icon-txt">Emergency_Purge.bat</span>
         </div>
 
     </div>
 
-    <!-- ALT GÖREV ÇUBUĞU -->
+    <!-- GÖREV ÇUBUĞU -->
     <div class="taskbar">
-        <div>STATUS: <span style="color: #00ff33;" id="sysStatus">SECURE</span></div>
+        <div>MALWARE_INFESTATION_LEVEL: <span style="color: #00ff33; font-weight: bold;" id="infestStatus">0% (SECURE)</span></div>
         <div id="clock">00:00:00</div>
     </div>
 
-    <script>
-        let isAnomaliesActive = false;
-        let ghostTypingInterval = null;
+    <!-- KRİTİK ÇÖKME EKRANI (RSOD) -->
+    <div class="rsod" id="rsodScreen">
+        <h1 style="font-size: 3rem; margin-bottom: 20px;">SYSTEM FATAL CORRUPTION</h1>
+        <p>[!] Error Code: 0x0000F4_FATAL_TRAP_TRIGGERED</p>
+        <p style="margin-top: 15px; color: #ff9999;">Sosyal mühendislik katmanı aşıldı. Bellekteki yığın alanları siliniyor. Temizleme modülü başlatılıyor...</p>
+        <br>
+        <p>Geri Yükleme İlerlemesi: <span id="rebootProgress">0</span>%</p>
+    </div>
 
-        function startHorrorSim() {
+    <script>
+        let liveAnomalies = { ransomware: false, glitch: false, ghost: false };
+        let logInterval = null;
+
+        function initSimulation() {
             if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
-            document.getElementById('fullscreenOverlay').style.display = 'none';
-            
-            // Profesyonel zaman ayarlı sahte bildirim döngüsü (Psikolojik Baskı)
-            setTimeout(() => spawnHorrorToast("SİSTEM UYARISI", "Arka planda bilinmeyen bir port üzerinden veri akışı tespit edildi. Core_Terminal.sh dosyasını inceleyin."), 3000);
-            setTimeout(() => spawnHorrorToast("KRİTİK HATA", "The_Overseer.ai yetkilerini genişletti. Dosya erişimleri kısıtlanıyor olabilir.", true), 8000);
-            
-            // Arka planda rastgele glitch tetikleme (Rastgele Korku Elementi)
-            setInterval(() => {
-                if(Math.random() > 0.7) {
-                    document.body.style.filter = "invert(100%) cubic-bezier(.1,.9,.2,1)";
-                    setTimeout(() => document.body.style.filter = "none", 150);
-                }
-            }, 5000);
+            document.getElementById('introOverlay').style.display = 'none';
+
+            // Psikolojik Bildirim Akışı
+            setTimeout(() => spawnHorrorToast("SİSTEM İHLALİ", "Bilinmeyen bir imza veri tabanına sızmaya çalışıyor. Emergency_Purge.bat dosyasını hazırda tutun!"), 4000);
+            setTimeout(() => spawnHorrorToast("BEYANAT ALINDI", "The_Overseer.ai arka planda mikrofon ve imleç girdilerini kopyalamaya başladı.", true), 10000);
         }
+
+        // GERÇEK ZAMANLI GÖZ TAKİBİ ALGORİTMASI
+        document.addEventListener('mousemove', (e) => {
+            const pupil = document.getElementById('eyePupil');
+            const eyeStalker = document.querySelector('.eye-stalker');
+            const rect = eyeStalker.getBoundingClientRect();
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+            
+            const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+            const distance = Math.min(rect.width / 4, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 10);
+            
+            const targetX = Math.cos(angle) * distance;
+            const targetY = Math.sin(angle) * distance;
+            
+            pupil.style.transform = `translate(${targetX}px, ${targetY}px)`;
+        });
 
         function updateClock() {
             const now = new Date();
@@ -215,27 +245,29 @@
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // SAHTE KORKU BİLDİRİMLERİ
-        function spawnHorrorToast(title, msg, isUrgent) {
+        // KORKU TOAST MOTORU
+        function spawnHorrorToast(title, msg, isDanger) {
             const notchBox = document.getElementById('notchBox');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            if(isUrgent) toast.style.borderColor = "#ff0000";
-            toast.innerHTML = `<strong>[ ${title} ]</strong><p style="font-size:0.75rem; margin-top:5px; color:#aaa;">${msg}</p>`;
+            if(isDanger) toast.style.borderColor = "#ff0000";
+            toast.innerHTML = `<strong>[ ${title} ]</strong><p style="font-size:0.75rem; margin-top:6px; color:#bbb; font-family:'Courier Prime';">${msg}</p>`;
             
-            toast.onclick = () => { toast.remove(); executeJumpscare(); };
+            toast.onclick = () => { toast.remove(); triggerRSOD(); };
             notchBox.appendChild(toast);
             setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => { if(toast.parentNode) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); } }, 7000);
+            setTimeout(() => { if(toast.parentNode) { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); } }, 8000);
         }
 
-        // PROFESSIONAL WINDOW FACTORY
+        // PROFESYONEL PENCERE FABRİKASI
         function createHorrorWindow(title, contentHTML, width, height) {
             const desktop = document.getElementById('desktop');
             const win = document.createElement('div');
             win.className = 'popup-window';
+            if(liveAnomalies.glitch) win.className += " glitch-active shake-active";
+
             win.style.width = width; win.style.height = height;
-            win.style.left = `${150 + Math.random() * 150}px`; win.style.top = `${80 + Math.random() * 80}px`;
+            win.style.left = `${140 + Math.random() * 200}px`; win.style.top = `${90 + Math.random() * 90}px`;
 
             win.innerHTML = `
                 <div class="window-header">
@@ -246,118 +278,142 @@
             `;
             desktop.appendChild(win);
 
-            // Drag and Drop
-            let dragging = false, x = 0, y = 0;
-            win.querySelector('.window-header').onmousedown = (e) => { dragging = true; x = e.clientX - win.offsetLeft; y = e.clientY - win.offsetTop; };
-            document.onmousemove = (e) => { if(dragging) { win.style.left = (e.clientX - x) + 'px'; win.style.top = (e.clientY - y) + 'px'; } };
-            document.onmouseup = () => dragging = false;
+            let drag = false, x = 0, y = 0;
+            win.querySelector('.window-header').onmousedown = (e) => { drag = true; x = e.clientX - win.offsetLeft; y = e.clientY - win.offsetTop; };
+            document.onmousemove = (e) => { if(drag) { win.style.left = (e.clientX - x) + 'px'; win.style.top = (e.clientY - y) + 'px'; } };
+            document.onmouseup = () => drag = false;
 
             return win;
         }
 
-        // TERMİNAL (LOG AKIŞI)
+        // CANLI SIZMA TERMİNALİ
         function openTerminal() {
             const html = `
-                <div class="terminal-box" id="termLogs">
-                    [SYSTEM]: Kernel initialization... OK<br>
-                    [SYSTEM]: Netstat monitoring interface loaded.<br>
-                    [WARNING]: Unknown PID (4492) manipulating system directory.<br>
+                <div class="terminal-feed" id="termFeed">
+                    [+] Core Security Layer Initialized.<br>
+                    [+] Scanning active ports... 22, 80, 443 OPEN.<br>
+                    [!] Threat simulation listener active.<br>
                 </div>
             `;
             createHorrorWindow("Core_Terminal.sh", html, "auto", "auto");
+            
+            if(liveAnomalies.ghost) {
+                animateTerminalLogs();
+            }
         }
 
-        // INTERAKTIF OVERSEER AI
-        function openHorrorAI() {
+        function animateTerminalLogs() {
+            const feed = document.getElementById('termFeed');
+            if(!feed) return;
+            const emergencyLogs = [
+                "[!] WARNING: Privilege escalation detected on root kernel.",
+                "[!] INTRUSION: Shifting encryption matrix to AES-256.",
+                "[DUMP]: Dumping user credentials hashes...",
+                "[DUMP]: SAM database cloned successfully.",
+                "[!] CRITICAL: System thread termination failure."
+            ];
+            let line = 0;
+            clearInterval(logInterval);
+            logInterval = setInterval(() => {
+                if(line < emergencyLogs.length) {
+                    feed.innerHTML += `<span style="color:#ff1111;">${emergencyLogs[line]}</span><br>`;
+                    feed.scrollTop = feed.scrollHeight;
+                    line++;
+                } else {
+                    clearInterval(logInterval);
+                }
+            }, 1200);
+        }
+
+        // OVERSEER AI INTERFACE
+        function openOverseer() {
             const html = `
-                <div class="ai-chat">
-                    <div class="ai-logs" id="aiLogs">
-                        <div>[SYSTEM]: Arayüz aktif. Algoritmaya bir soru yöneltin.</div>
+                <div class="overseer-chat">
+                    <div class="chat-logs" id="chatLogs">
+                        <div>[SYSTEM]: Güvenli yapay zeka kanalı açıldı. Soru sorun.</div>
                     </div>
-                    <input type="text" class="ai-input" id="aiInp" placeholder="Komut veya soru girin..." onkeydown="handleAI(event)">
+                    <input type="text" class="chat-input" placeholder="İstediğiniz komutu buraya yazın..." onkeydown="talkToOverseer(event)">
                 </div>
             `;
             createHorrorWindow("The_Overseer.ai", html, "auto", "auto");
         }
 
-        function handleAI(e) {
+        function talkToOverseer(e) {
             if(e.key === 'Enter') {
-                const logs = document.getElementById('aiLogs');
-                logs.innerHTML += `<div style="color:#ff6666;">> ${e.target.value}</div>`;
+                const logs = document.getElementById('chatLogs');
+                logs.innerHTML += `<div style="color:#ff5555;">> ${e.target.value}</div>`;
                 const val = e.target.value.toLowerCase();
                 e.target.value = "";
 
-                let response = "İstek anlaşılamadı. Algoritma izlemeye devam ediyor.";
-                if(val.includes("kimsin")) response = "Ben bu sistemdeki dijital ayak iziyim. Her tıklamanı, her hatanı kaydediyorum.";
-                if(val.includes("virüs") || val.includes("hacker")) response = "Sızma zaten tamamlandı. Güvenlik duvarını içeriden indiren sendin.";
+                let reply = "Port taramaları ve arka plan süreçleri stabil durumda.";
+                if(val.includes("korku") || val.includes("kimsin")) reply = "Ben sadece bir gölge algoritmayım. Ama pencerelerin ardındaki gözler gerçek.";
+                if(val.includes("sil") || val.includes("virüs")) reply = "Dosyaları silen ben değilim, senin merakındı.";
 
-                setTimeout(() => { logs.innerHTML += `<div style="color:#ff3333;">[OVERSEER]: ${response}</div>`; logs.scrollTop = logs.scrollHeight; }, 500);
+                setTimeout(() => {
+                    logs.innerHTML += `<div style="color:#ff1111;">[THE OVERSEER]: ${reply}</div>`;
+                    logs.scrollTop = logs.scrollHeight;
+                }, 600);
             }
         }
 
-        // SOSYAL MÜHENDİSLİK VE TUZAK SİMÜLASYONLARI
-        function triggerTrap(type) {
-            document.getElementById('sysStatus').textContent = "COMPROMISED";
-            document.getElementById('sysStatus').style.color = "#ff3333";
+        // PROFESYONEL BREACH TETİKLEYİCİLERİ
+        function triggerBreach(type) {
+            document.getElementById('infestStatus').textContent = "99% (CRITICAL BREACH)";
+            document.getElementById('infestStatus').style.color = "#ff1111";
 
-            if(type === 'ransom') {
-                // Ransomware Modu: İkon isimlerini bozup ekranda parazit açma
-                document.querySelectorAll('.icon-txt').forEach(t => t.textContent = "SYSTEM_ERROR.locked");
-                createHorrorWindow("🚨 CRYPTO_CORRUPTION 🚨", `
-                    <div style="padding:10px; color:#ff3333; line-height:1.6;">
-                        <h2>Sistem Şifreleme Protokolü Tetiklendi</h2>
-                        <p style="margin-top:10px; font-size:0.8rem; color:#888;">Sosyal mühendislik açığı başarıyla simüle edildi. Kullanıcı güvensiz bir ikona manuel onay verdi. Çekirdek verileri donduruldu.</p>
+            if(type === 'ransomware') {
+                liveAnomalies.ransomware = true;
+                document.querySelectorAll('.icon-txt').forEach(t => t.textContent = "CORRUPTED_BLOB.locked");
+                createHorrorWindow("🔒 SYSTEM LOCKOUT 🔒", `
+                    <div style="font-family:'Courier Prime'; line-height:1.6; color:#ff3333;">
+                        <h3>[CRITICAL]: Veri Bütünlüğü Kayboldu</h3>
+                        <p style="margin-top:10px; font-size:0.8rem; color:#888;">Tüm yerel dizin ağaçları sahte anahtarlarla mühürlendi. Emergency_Purge.bat ile dezenfekte protokolü başlatılmazsa sistem kendini kapatacak.</p>
                     </div>
-                `, "400px", "auto");
-            } 
+                `, "420px", "auto");
+            }
             else if(type === 'glitch') {
-                // Glitch Modu: Tüm pencerelerin delirmesi
+                liveAnomalies.glitch = true;
                 document.querySelectorAll('.popup-window').forEach(w => w.classList.add('glitch-active', 'shake-active'));
-                spawnHorrorToast("BELLEK TAŞMASI", "Buffer overflow simülasyonu çalışıyor. Pencereler kilitlendi.", true);
-            } 
+                document.getElementById('bodyTag').classList.add('glitch-active');
+                setTimeout(() => { document.getElementById('bodyTag').classList.remove('glitch-active'); }, 2000);
+            }
             else if(type === 'ghost') {
-                // Ghost Typing Modu: Terminale sızma
+                liveAnomalies.ghost = true;
                 openTerminal();
-                const term = document.getElementById('termLogs');
-                if(term) {
-                    let msg = "  [HACKER_CONNECTED]: Veri havuzuna erişim sağlandı. Sisteminiz tamamen izleniyor. Çıkış yapamazsınız.";
-                    let i = 0;
-                    clearInterval(ghostTypingInterval);
-                    ghostTypingInterval = setInterval(() => {
-                        term.innerHTML += msg[i];
-                        i++;
-                        if(i >= msg.length) clearInterval(ghostTypingInterval);
-                    }, 50);
-                }
             }
         }
 
-        // JUMPSCARE TETİKLEYİCİSİ
-        function executeJumpscare() {
-            const js = document.getElementById('jumpscare');
-            js.style.display = 'flex';
-            document.body.style.filter = "glitch-active";
-            setTimeout(() => {
-                js.style.display = 'none';
-                document.body.style.filter = "none";
-                resetSystem();
-            }, 1200);
+        // GERÇEKÇİ ÇÖKME PROTOKOLÜ (RSOD)
+        function triggerRSOD() {
+            document.querySelectorAll('.popup-window').forEach(w => w.remove());
+            clearInterval(logInterval);
+            
+            const rsod = document.getElementById('rsodScreen');
+            rsod.style.display = 'block';
+            
+            let progress = 0;
+            const timer = setInterval(() => {
+                progress += 4;
+                document.getElementById('rebootProgress').textContent = progress;
+                if(progress >= 100) {
+                    clearInterval(timer);
+                    rsod.style.display = 'none';
+                    resetVariables();
+                }
+            }, 120);
         }
 
-        // ACİL DURUM TEMİZLİĞİ
-        function resetSystem() {
-            document.querySelectorAll('.popup-window').forEach(w => w.remove());
-            clearInterval(ghostTypingInterval);
-            document.getElementById('sysStatus').textContent = "SECURE";
-            document.getElementById('sysStatus').style.color = "#00ff33";
-            
-            // İkonları eski haline getir
-            const originalNames = ["Core_Terminal.sh", "The_Overseer.ai", "Decrypter_Tool.exe", "Sızdırılan_Veriler.pkg", "Sistem_Hizlandirici.sys", "Emergency_Purge.bat"];
-            document.querySelectorAll('.icon-txt').forEach((t, index) => {
-                t.textContent = originalNames[index];
-            });
-            
-            alert("[EMERGENCY PURGE]: Sistem güvenli duruma getirildi. Tüm yapay sızıntılar temizlendi.");
+        function resetVariables() {
+            liveAnomalies = { ransomware: false, glitch: false, ghost: false };
+            document.getElementById('infestStatus').textContent = "0% (SECURE)";
+            document.getElementById('infestStatus').style.color = "#00ff33";
+            const names = ["Core_Terminal.sh", "The_Overseer.ai", "Rootkit_Bypass.exe", "DeepWeb_Breach.bin", "Proxy_Overload.sys", "Emergency_Purge.bat"];
+            document.querySelectorAll('.icon-txt').forEach((t, i) => t.textContent = names[i]);
+        }
+
+        function purgeAllThreats() {
+            triggerRSOD();
+            setTimeout(() => { alert("[SUCCESS]: Temizleme protokolü bitti. Zararlı yazılım süreçleri bellekten atıldı."); }, 200);
         }
     </script>
 </body>
