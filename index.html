@@ -3,649 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W-NDOWS // SYSTEM_CORRUPTION_DETECTED</title>
+    <title>W-NDOWS // OPERATING_SYSTEM_IS_WATCHING_YOU</title>
     <style>
-        /* --- 1. SIFIRLAMA & ANA DEĞİŞKENLER --- */
+        /* --- 1. CORE RETRO & HORROR STYLES --- */
         :root {
-            --bg-color: #030000;
+            --bg-deep: #020202;
             --win-gray: #c0c0c0;
-            --win-dark-blue: #000080;
-            --terminal-green: #00ff33;
-            --horror-red: #8b0000;
-            --bright-red: #ff1111;
-            --font-family: 'Courier New', Courier, monospace;
+            --win-shadow-dark: #404040;
+            --win-shadow-light: #ffffff;
+            --win-blue: #000080;
+            --neon-red: #ff1111;
+            --dark-red: #550000;
+            --terminal-amber: #ffb000;
+            --font-mono: 'Courier New', Courier, monospace;
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
+            margin: 0; padding: 0; box-sizing: border-box; user-select: none;
+            -webkit-user-drag: none;
         }
 
         body, html {
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
-            color: #ffffff;
-            font-family: var(--font-family);
-            overflow-x: hidden;
-            overflow-y: auto;
+            width: 100%; height: 100%;
+            background-color: var(--bg-deep);
+            color: #d8d8d8; font-family: var(--font-mono);
+            overflow-x: hidden; overflow-y: auto;
+            position: relative;
         }
 
-        /* --- 2. CRT & VHS GLITCH SİMÜLASYONU (TÜM SİTEYİ KAPLAR) --- */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
-            z-index: 99999;
-            background-size: 100% 4px, 6px 100%;
-            pointer-events: none;
+        /* --- 2. ADVANCED CRT, SCANLINE & VHS LAYER MATRIX --- */
+        #crtOverlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            z-index: 999999; background-size: 100% 4px, 4px 100%; pointer-events: none;
         }
 
-        .crt-vignette {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.9) 100%);
-            z-index: 99998;
-            pointer-events: none;
+        #vignette {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, transparent 35%, rgba(0,0,0,0.95) 100%);
+            z-index: 999998; pointer-events: none;
         }
 
-        .vhs-noise {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-            opacity: 0.04;
-            z-index: 99997;
-            pointer-events: none;
+        #filmGrain {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+            opacity: 0.05; z-index: 999997; pointer-events: none;
         }
 
-        /* Arka Plan Sis Efekti */
-        .fog-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, transparent, rgba(5, 0, 0, 0.8));
-            opacity: 0.6;
-            z-index: 1;
-            pointer-events: none;
+        /* Liminal Sis Katmanı */
+        #liminalFog {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(3, 0, 0, 0.85) 100%);
+            z-index: 2; pointer-events: none; opacity: 0.85;
         }
 
-        /* --- 3. ANIMASYON TANIMLAMALARI --- */
-        @keyframes jitter {
-            0% { transform: translate(0, 0); }
+        /* --- 3. BIOS BOOT INTERFACE --- */
+        #biosWrapper {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #000000; color: #ffffff; z-index: 1000000;
+            padding: 50px; overflow: hidden; display: block;
+        }
+
+        .bios-line {
+            line-height: 1.8; font-size: 0.9rem; letter-spacing: 1px;
+            margin-bottom: 4px; border-right: 2px solid transparent;
+        }
+
+        .boot-trigger {
+            background: transparent; border: 1px dashed var(--neon-red);
+            color: var(--neon-red); padding: 12px 24px; cursor: pointer;
+            font-family: var(--font-mono); font-weight: bold; margin-top: 40px;
+            display: none; text-shadow: 0 0 5px var(--dark-red);
+        }
+        .boot-trigger:hover {
+            background: var(--dark-red); color: #fff; box-shadow: 0 0 20px var(--neon-red);
+        }
+
+        /* --- 4. OS DESKTOP ARCHITECTURE --- */
+        #osDesktop {
+            position: relative; width: 100%; min-height: 100vh;
+            padding: 40px; z-index: 10; display: none;
+            background: radial-gradient(circle at center, rgba(10,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .desktop-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 30px; max-width: 900px; margin-bottom: 60px;
+        }
+
+        .os-shortcut {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            cursor: pointer; padding: 12px; border: 1px solid transparent;
+            transition: background 0.1s, border-color 0.1s;
+        }
+        .os-shortcut:hover {
+            background: rgba(255, 17, 17, 0.05); border-color: var(--dark-red);
+        }
+        .os-icon-view {
+            font-size: 2.6rem; margin-bottom: 10px; filter: drop-shadow(0 0 6px #000);
+        }
+        .os-label {
+            font-size: 0.8rem; color: #b5b5b5; text-shadow: 1px 1px 2px #000;
+            letter-spacing: 0.5px;
+        }
+        .os-shortcut:hover .os-label {
+            color: var(--neon-red); text-shadow: 0 0 8px var(--neon-red);
+        }
+
+        /* --- 5. HIGH-FIDELITY RETRO WINDOWS MOCKUP --- */
+        .w95-frame {
+            position: absolute; background-color: var(--win-gray);
+            border: 2px solid #fff; border-right-color: var(--win-shadow-dark); border-bottom-color: var(--win-shadow-dark);
+            box-shadow: 3px 3px 15px rgba(0,0,0,0.7); color: #000000;
+            z-index: 100; display: flex; flex-direction: column; min-width: 320px;
+        }
+
+        .w95-titlebar {
+            background: var(--win-blue); color: #ffffff; padding: 5px 10px;
+            font-weight: bold; font-size: 0.85rem; display: flex;
+            justify-content: space-between; align-items: center; cursor: move;
+        }
+        .w95-titlebar.anomaly-bar { background: var(--dark-red) !important; }
+
+        .w95-close-btn {
+            background: var(--win-gray); border: 1px solid #fff;
+            border-right-color: #333; border-bottom-color: #333;
+            width: 18px; height: 18px; font-size: 0.75rem; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
+        .w95-body {
+            padding: 20px; flex: 1; overflow-y: auto; background: #ffffff;
+            font-size: 0.85rem; line-height: 1.5;
+        }
+        .terminal-mode {
+            background: #000000 !important; color: var(--terminal-amber) !important;
+        }
+
+        /* --- 6. ARG CONTENT & DOCUMENT PRESENTATION --- */
+        .presentation-node {
+            max-width: 800px; margin-top: 60px; padding: 40px;
+            background: rgba(4, 2, 2, 0.85); border: 1px solid #222;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9); position: relative;
+        }
+        .presentation-node h2 {
+            color: var(--neon-red); font-size: 1.5rem; margin-bottom: 20px;
+            border-bottom: 1px dashed var(--dark-red); padding-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .presentation-node p {
+            color: #aaaaaa; font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px;
+        }
+
+        /* --- 7. ANOMALY LAYER GRAPHICS --- */
+        #shadowSilhouette {
+            position: fixed; width: 120px; height: 260px;
+            background: rgba(0,0,0,0.93); filter: blur(15px);
+            pointer-events: none; z-index: 99995; display: none;
+            border-radius: 50% 50% 0 0;
+        }
+
+        #jumpscareContainer {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #000; z-index: 2000000; display: none;
+            align-items: center; justify-content: center;
+        }
+        #jumpscareContainer img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: contrast(300%) brightness(50%) saturate(0%);
+        }
+
+        /* --- 8. REALTIME CSS JITTER & SHAKE ENGINE --- */
+        @keyframes microJitter {
+            0% { transform: translate(0,0); }
             20% { transform: translate(-1px, 1px); }
             40% { transform: translate(1px, -1px); }
             60% { transform: translate(-1px, -1px); }
             80% { transform: translate(1px, 1px); }
-            100% { transform: translate(0, 0); }
+            100% { transform: translate(0,0); }
         }
+        .jitter-active { animation: microJitter 0.1s infinite; }
 
-        @keyframes screenFlashRed {
-            0%, 100% { filter: none; }
-            50% { filter: matrix(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) sepia(100%) saturate(800%) hue-rotate(-50deg); background-color: #200000; }
-        }
-
-        .shake-effect {
-            animation: jitter 0.15s infinite;
-        }
-
-        .red-alert-active {
-            animation: screenFlashRed 0.5s ease-in-out 3;
-        }
-
-        /* --- 4. BIOS & AÇILIŞ SEKANSI --- */
-        #biosContainer {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000000;
-            color: #ffffff;
-            z-index: 100000;
-            padding: 40px;
-            overflow-y: auto;
-            display: block;
-        }
-
-        .bios-text {
-            line-height: 1.6;
-            font-size: 0.95rem;
-            white-space: pre-line;
-            margin-bottom: 20px;
-        }
-
-        .bios-btn {
-            background: transparent;
-            border: 1px solid var(--horror-red);
-            color: var(--bright-red);
-            padding: 10px 20px;
-            cursor: pointer;
-            font-family: var(--font-family);
-            font-size: 1rem;
-            display: none;
-            margin-top: 30px;
-        }
-        .bios-btn:hover {
-            background: var(--horror-red);
-            color: #fff;
-            box-shadow: 0 0 15px var(--bright-red);
-        }
-
-        /* --- 5. ANA MASAÜSTÜ ARAYÜZÜ --- */
-        #mainDesktop {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            padding: 30px;
-            z-index: 5;
-            display: none; /* BIOS bitince aktifleşecek */
-            background: radial-gradient(ellipse at center, rgba(15,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%);
-        }
-
-        /* Grid Masaüstü İkonları */
-        .icon-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 25px;
-            max-width: 800px;
-            margin-bottom: 50px;
-        }
-
-        .desktop-icon {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            padding: 10px;
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .desktop-icon:hover {
-            background: rgba(139, 0, 0, 0.15);
-            border: 1px dashed var(--bright-red);
-        }
-
-        .desktop-icon .icon-img {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 0 5px #000);
-        }
-
-        .desktop-icon .icon-label {
-            font-size: 0.8rem;
-            color: #d1d1d1;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        /* Korkutucu Hover Tetikleyicisi */
-        .desktop-icon:hover .icon-label {
-            color: var(--bright-red);
-            animation: jitter 0.1s infinite;
-        }
-
-        /* --- 6. RETRO WINDOWS 95 PENCERE TASARIMI --- */
-        .win95-window {
-            position: absolute;
-            background-color: var(--win-gray);
-            border: 2px solid #fff;
-            border-right-color: #555;
-            border-bottom-color: #555;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.6);
-            color: #000;
-            z-index: 500;
-            display: flex;
-            flex-direction: column;
-            min-width: 280px;
-        }
-
-        .win95-header {
-            background: var(--win-dark-blue);
-            color: #ffffff;
-            padding: 4px 8px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: move;
-        }
-
-        .win95-header.corrupted {
-            background: var(--horror-red) !important;
-        }
-
-        .win95-close {
-            background: var(--win-gray);
-            border: 1px solid #fff;
-            border-right-color: #444;
-            border-bottom-color: #444;
-            width: 16px;
-            height: 16px;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .win95-content {
-            padding: 15px;
-            flex: 1;
-            overflow-y: auto;
-            background: #ffffff;
-            font-size: 0.85rem;
-            line-height: 1.4;
-        }
-
-        /* Terminal Pencere Modifikasyonu */
-        .terminal-content {
-            background: #000000 !important;
-            color: var(--terminal-green) !important;
-            font-family: var(--font-family);
-        }
-
-        /* --- 7. INTRO & ARG TANITIM METİNLERİ (SCROLL ALANI) --- */
-        .game-presentation {
-            margin-top: 80px;
-            max-width: 750px;
-            border: 1px solid #333;
-            background: rgba(5, 5, 5, 0.8);
-            padding: 30px;
-            border-radius: 4px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-
-        .game-presentation h2 {
-            color: var(--bright-red);
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-            border-bottom: 1px dashed var(--horror-red);
-            padding-bottom: 5px;
-        }
-
-        .game-presentation p {
-            color: #cccccc;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        /* --- 8. JUMPSCARE OVERLAY --- */
-        #jumpscareOverlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: #000;
-            z-index: 200000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #jumpscareOverlay img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: contrast(200%) brightness(80%) sepia(50%) hue-rotate(-30deg);
-        }
-
-        /* --- 9. RESPONSIVE TASARIM --- */
-        @media (max-width: 600px) {
-            #mainDesktop { padding: 15px; }
-            .icon-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 15px; }
-            .win95-window { width: 90% !important; left: 5% !important; }
-            .game-presentation { padding: 15px; }
+        /* --- 9. APP TASKBAR FOOTER --- */
+        .footer-taskbar {
+            width: 100%; height: 45px; background: var(--win-gray);
+            border-top: 2px solid #fff; position: fixed; bottom: 0; left: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; z-index: 99990; color: #000; font-size: 0.85rem;
+            border-bottom: 1px solid var(--win-shadow-dark);
         }
     </style>
 </head>
-<body id="mainBody">
+<body id="coreBody">
 
-    <!-- Efekt Katmanları -->
-    <div class="crt-vignette"></div>
-    <div class="vhs-noise"></div>
-    <div class="fog-container"></div>
+    <div id="crtOverlay"></div>
+    <div id="vignette"></div>
+    <div id="filmGrain"></div>
+    <div id="liminalFog"></div>
+    <div id="shadowSilhouette"></div>
 
-    <!-- 1. SEKANSA GİRİŞ: BIOS BÖLÜMÜ -->
-    <div id="biosContainer">
-        <div class="bios-text" id="biosLog"></div>
-        <button class="bios-btn" id="bootBtn" onclick="bootToDesktop()">BOOT SYSTEM_REPLICA.EXE</button>
+    <div id="biosWrapper">
+        <div id="biosConsole"></div>
+        <button class="boot-trigger" id="bootAction" onclick="igniteSystemCore()">INITIALIZE TERMINAL_SUBSYSTEM.SYS</button>
     </div>
 
-    <!-- 2. SEKANSA GİRİŞ: MASAÜSTÜ KONTROL ALANI -->
-    <main id="mainDesktop">
+    <main id="osDesktop">
         
-        <!-- Masaüstü Kısayolları -->
-        <div class="icon-grid">
-            <div class="desktop-icon" onclick="openWindow('system_info')">
-                <div class="icon-img">💾</div>
-                <span class="icon-label">Sistem_Oku.txt</span>
+        <div class="desktop-grid">
+            <div class="os-shortcut" onclick="launchWindow('sys_manifest')">
+                <div class="os-icon-view">💾</div>
+                <span class="os-label">MANIFEST.txt</span>
             </div>
-            <div class="desktop-icon" onclick="openWindow('backrooms_log')">
-                <div class="icon-img">📂</div>
-                <span class="icon-label">Kat_0_Analiz.log</span>
+            <div class="os-shortcut" onclick="launchWindow('liminal_records')">
+                <div class="os-icon-view">📂</div>
+                <span class="os-label">REC_04_02.log</span>
             </div>
-            <div class="desktop-icon" onclick="openWindow('terminal_dev')">
-                <div class="icon-img">💻</div>
-                <span class="icon-label">Kök_Erişim.bat</span>
+            <div class="os-shortcut" onclick="launchWindow('hacker_shell')">
+                <div class="os-icon-view">💻</div>
+                <span class="os-label">Terminal_Core.bat</span>
             </div>
-            <div class="desktop-icon" onclick="playCorruptedSound()">
-                <div class="icon-img">🎚️</div>
-                <span class="icon-label">Bozuk_Ses.wav</span>
+            <div class="os-shortcut" onclick="triggerAnomalousPulse()">
+                <div class="os-icon-view">📡</div>
+                <span class="os-label">Frekans_Tara.exe</span>
             </div>
-            <div class="desktop-icon" id="secretIcon" style="opacity: 0.15;" onclick="triggerSecretEgg()">
-                <div class="icon-img">👁️</div>
-                <span class="icon-label">Bize_Bakma.sys</span>
+            <div class="os-shortcut" id="argSecretNode" style="opacity: 0.08;" onclick="revealHiddenArgTrace()">
+                <div class="os-icon-view">👁️</div>
+                <span class="os-label">Izleme_Birimi.sys</span>
             </div>
         </div>
 
-        <!-- İnteraktif Tanıtım ve Hikaye Alanı (ARG Tabanlı) -->
-        <section class="game-presentation">
-            <h2>PROJE: W-NDOWS (Analog Psikolojik Korku Deneyimi)</h2>
+        <section class="presentation-node">
+            <h2>W-NDOWS // PSYCHOLOGICAL HORROR EXPERIMENT</h2>
             <p>
-                Yıl 1998. Terkedilmiş bir devlet dairesinin bodrum katında bulunan eski bir terminal, çalışmaması gereken bir işletim sistemini ayağa kaldırdı. Bu sistem bildiğiniz Windows mimarilerine benzemiyor. Dosya dizinlerinin arasında, fiziksel gerçekliğin sınırlarını aşan koridorların koordinatları gizli.
+                Sistem normal bir şekilde boot edildi fakat arka plan portlarında bilinmeyen paket anomalileri saptanıyor. Bu yazılım bir oyun tanıtımının ötesinde, <strong>Mandela Catalogue</strong> ve <strong>Local58</strong> yapıtlarındaki gibi varlıksal kaygıyı, analog televizyon frekanslarındaki bozulmalarla tarayıcınıza taşır.
             </p>
             <p>
-                <strong>Welcome Home</strong> ve <strong>Mandela Catalogue</strong> eserlerinden esinlenen bu interaktif simülatörde, sahte hata pencerelerinin arkasındaki manipülatif varlığı keşfedeceksiniz. Fare hareketleriniz, işletim sisteminin stabilitesini doğrudan etkiliyor. Dikkat edin; sistem sizi izliyor olabilir.
+                Sessizlik en büyük yanılgıdır. Terminal pencerelerini açtıkça ve dizinlerde derinleştikçe, arka planda çalışan sanal fan uğultularının ve telsiz parazitlerinin yerini fiziksel ayak sesleri alacaktır. Fare imlecinizi özgür bıraktığınızda, sistemin kendi kendine vereceği kararları izleyin.
             </p>
-            <p style="color: var(--horror-red); font-weight: bold; font-size: 0.8rem;">
-                [!] ARG DOSYASI #09: Sayfayı aşağı kaydırdıkça frekans bozulacaktır. Gerçeğe dönmek için acil durum butonlarını kullanın.
+            <p style="color: var(--neon-red); font-size: 0.8rem; font-weight: bold;">
+                [ARG NOTU]: Sistem parametreleri sayfa kaydırma oranınıza (Scroll Position) duyarlıdır. Derine indikçe çekirdek bütünlüğü kaybolur.
             </p>
         </section>
 
+        <div class="footer-taskbar">
+            <div style="font-weight: bold; background: #a0a0a0; padding: 2px 8px; border: 1px solid #fff; border-right-color:#333; border-bottom-color:#333;">Başlat</div>
+            <div id="sysTimeClock" style="font-family: var(--font-mono); font-weight: bold;">00:00</div>
+        </div>
     </main>
 
-    <!-- JUMPSCARE KATMANI -->
-    <div id="jumpscareOverlay">
-        <!-- Telifsiz ve atmosferik korkunç silüet kaynağı -->
-        <img src="https://images.pexels.com/photos/18264716/pexels-photo-18264716.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="MANIF_ERROR">
+    <div id="jumpscareContainer">
+        <img src="https://images.pexels.com/photos/18264716/pexels-photo-18264716.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="ENTITY_MANIFESTATION">
     </div>
 
-    <!-- --- 10. VANILLA JAVASCRIPT KONTROL MOTORU --- -->
     <script>
-        // Global Durum Yönetimi
-        const state = {
-            hasUserInteracted: false,
-            glitchIntensity: 0,
-            jumpscareTriggered: false
+        const runtimeState = {
+            systemRunning: false,
+            audioCtx: null,
+            ambienceNodes: [],
+            scrollEntropy: 0,
+            mouseLockTimer: null,
+            jumpscareDone: false
         };
 
-        // BIOS Yazı Dizisi
-        const biosLines = [
-            "ROM BIOS VERSION 4.05 A95\nCopyright (C) 1985-1998, Replica Corp.",
-            "0640K SYSTEM RAM PASSED",
-            "128000K EXTENDED RAM PASSED",
-            "MOUSE DRIVER INITIALIZED : SOUND CARD DETECTED",
-            "HARD DISK 0: REPLICA-ROOT ATTACHED (SECTOR 0x55F)",
-            "\n[!] WARNING: CACHE SECTOR 004 IS COMPROMISED",
-            "[!] UNKNOWN PROTOCOL DETECTED IN DIRECTORY C:\\W-NDOWS\\",
-            "\nLOADER IS READY. INITIALIZING SHELL EXTENSION..."
+        const biosContent = [
+            "REPLICA CORE ARCHITECTURE BIOS V2.06",
+            "CORE REGISTERS STATUS: STABLE // IRQ INTERRUPTS LINKED",
+            "TESTING MEMORY CHANNELS... 128MB RAM OK",
+            "MAPPED DEVICE: INTEGRATED SPATIAL AUDIO INTERFACE",
+            "LOADING EMBEDDED VOLATILE DIRECTORIES...",
+            "\n[!] ALERT: SUB-ROUTINE 'THE_WATCHER' IS UNRESOLVED IN SYSTEM32",
+            "[!] PHYSICAL ISOLATION UNIT DISCONNECTED",
+            "\nSAYFA KORUMASI DEVRE DIŞI BIRAKILDI. SİSTEME GİRİŞ YAPILABİLİR."
         ];
 
-        // Sayfa yüklendiğinde BIOS tetiklensin
+        // BIOS Akış Algoritması
         window.addEventListener('DOMContentLoaded', () => {
-            runBiosTerminal(0);
+            printBiosStream(0);
         });
 
-        function runBiosTerminal(index) {
-            const logBox = document.getElementById('biosLog');
-            if (index < biosLines.length) {
-                logBox.innerHTML += biosLines[index] + "\n";
-                // Doğal terminal akış hissi için değişken gecikmeler
-                setTimeout(() => runBiosTerminal(index + 1), 350 + Math.random() * 200);
+        function printBiosStream(step) {
+            const consoleBox = document.getElementById('biosConsole');
+            if(step < biosContent.length) {
+                consoleBox.innerHTML += `<div class="bios-line">${biosContent[step]}</div>`;
+                setTimeout(() => printBiosStream(step + 1), 400 + Math.random() * 250);
             } else {
-                document.getElementById('bootBtn').style.display = 'inline-block';
+                document.getElementById('bootAction').style.display = 'block';
             }
         }
 
-        // Kullanıcı Sistemi Başlattığında Çalışacak Fonksiyon
-        function bootToDesktop() {
-            state.hasUserInteracted = true;
-            // Ham ses mimarisini etkinleştir (Tarayıcı izni için)
-            playTone(110, "sawtooth", 0.3);
+        // Ana İşletim Sistemini Ayağa Kaldırma
+        function igniteSystemCore() {
+            runtimeState.systemRunning = true;
+            document.getElementById('biosWrapper').style.display = 'none';
+            document.getElementById('osDesktop').style.display = 'block';
             
-            document.getElementById('biosContainer').style.display = 'none';
-            document.getElementById('mainDesktop').style.display = 'block';
-
-            // Döngüsel Arka Plan Olaylarını Başlat
-            initBackgroundAnomalies();
+            // Profesyonel Web Audio API Uzamsal Ses Düzenini Başlat
+            initializeSpatialAudioEngine();
+            
+            // Anomali ve Tarama Döngülerini Devreye Al
+            runAnomalousCoreLoop();
         }
 
-        // Sentetik Ses Efekti Motoru (Web Audio API - Ek kütüphaneye ihtiyaç duymadan ses üretir)
-        function playTone(freq, type, duration) {
-            if (!state.hasUserInteracted) return;
+        // --- 11. SPATIAL AUDIO ENGINE (WEB AUDIO API) ---
+        // Harici dosya olmadan tamamen matematiksel ve frekans tabanlı analog sesler üretir.
+        function initializeSpatialAudioEngine() {
             try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                const ctx = new AudioContext();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                runtimeState.audioCtx = new AudioCtx();
+                
+                // 1. Bilgisayar Fanı ve CRT Uğultusu Simülasyonu (Low Frequency Noise)
+                createContinuousHum(60, 0.04); // Fan Uğultusu
+                createContinuousHum(15600, 0.002); // CRT Yüksek Frekans Çınlaması
 
-                osc.type = type || 'sine';
-                osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.15, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + duration);
-            } catch (e) {
-                console.log("Audio API init error or blocked.");
+                // 2. Dinamik 3D Telsiz Parazitleri ve Konuşma Döngüsü
+                scheduleSpatialRadioChirp();
+            } catch(e) {
+                console.log("Audio Engine context blocked or unsupported.");
             }
         }
 
-        // İkon Tıklama Sesi
-        function playCorruptedSound() {
-            // Bozuk analog frekans tonu simüle edilir
-            playTone(85, "sawtooth", 0.8);
-            setTimeout(() => playTone(60, "square", 0.4), 150);
+        function createContinuousHum(freq, targetVolume) {
+            const ctx = runtimeState.audioCtx;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
             
-            // Ekran anlık olarak kırmızılık kazansın
-            document.getElementById('mainBody').classList.add('red-alert-active');
-            setTimeout(() => {
-                document.getElementById('mainBody').classList.remove('red-alert-active');
-            }, 1500);
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            osc.type = freq > 10000 ? 'sine' : 'triangle';
+            gain.gain.setValueAtTime(targetVolume, ctx.currentTime);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
         }
 
-        // Dinamik Pencere Sistemi (Win 95/98 Stili)
-        const windowContents = {
-            system_info: {
-                title: "Sistem_Oku.txt - Not Defteri",
-                corrupted: false,
-                html: "<p>Kayıtlı kullanıcı adı: ERROR_404<br>Sistem Türü: Liminal Mimari Kontrol Birimi.<br><br>Bu yazılımı kapatmaya çalışmayın. <strong>Faith</strong> size rehberlik etmeyecek. Gördüğünüz pencereler sadece birer katmandır.</p>"
+        // 3D Alanda (Sağ/Sol) Telsiz ve Fısıltı Seslerinin Dağılımı
+        function scheduleSpatialRadioChirp() {
+            if(!runtimeState.systemRunning) return;
+            
+            const ctx = runtimeState.audioCtx;
+            const duration = 1.2 + Math.random() * 1.5;
+            
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+
+            // Rastgele sağ veya sol kulaklığa sesi gönder (Spatial Pan)
+            if(panner) {
+                panner.pan.setValueAtTime(Math.random() > 0.5 ? -0.85 : 0.85, ctx.currentTime);
+            }
+
+            // Telsiz ses frekansı (Bozuk kare dalga)
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(90 + Math.random() * 40, ctx.currentTime);
+
+            gain.gain.setValueAtTime(0.012, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+
+            if(panner) {
+                osc.connect(gain).connect(panner).connect(ctx.destination);
+            } else {
+                osc.connect(gain).connect(ctx.destination);
+            }
+
+            osc.start();
+            osc.stop(ctx.currentTime + duration);
+
+            // Bir sonraki telsiz sesini rastgele sürede planla (Belirsizlik unsuru)
+            setTimeout(scheduleSpatialRadioChirp, 9000 + Math.random() * 14000);
+        }
+
+        // --- 12. PENCERE FABRİKASYONU ---
+        const directoryDatabase = {
+            sys_manifest: {
+                title: "MANIFEST.txt - Not Defteri",
+                mode: "text",
+                data: "<p>Kayıt Dosyası: #00-A9<br>Durum: İncelenemez.<br><br>Burada tek başına olduğunu düşünüyorsan, işletim sisteminin bellek adreslerindeki anlık boşlukları hesapla. <strong>The Backrooms</strong> mimarisi bu yazılımın çekirdeğine sızdı.</p>"
             },
-            backrooms_log: {
-                title: "Kat_0_Analiz.log",
-                corrupted: true,
-                html: "<p style='color: #8b0000;'>[VERİ BOZULDU]<br>Nemli sarı duvar kağıtları... Floresan lambaların durmaksızın devam eden uğultusu... Arka odalarda sistem dosyalarını bulduk. Onlar dosya değil, canlı et kütleleri.</p>"
+            liminal_records: {
+                title: "REC_04_02.log",
+                mode: "text",
+                data: "<p style='color: var(--neon-red);'>[!] ACİL UYARI PROTOKOLÜ</p><p style='margin-top:10px;'>Koridorlardaki floresan ışıkların sesini duyabiliyorum. Bu sistem bir bilgisayar değil. Bir kapı. Kapatırsan arkanda belirecek.</p>"
             },
-            terminal_dev: {
+            hacker_shell: {
                 title: "C:\\W-NDOWS\\system32\\cmd.exe",
-                corrupted: false,
-                html: "<div class='terminal-content' style='height:150px; padding:5px; overflow-y:auto;' id='termData'>> Geliştirici konsolu aktif.<br>> Bağımlılıklar taranıyor...<br>> UYARI: 'The Overseer' sisteme giriş yaptı.</div>"
+                mode: "terminal",
+                data: "<div class='w95-body terminal-mode' id='shellCoreData' style='height:180px;'>> SCANNING LOCAL HOST...<br>> USER_SIGHT DETECTED IN ROOM AREA.<br>> MONITORING IMAGES... ATTACHED.</div>"
             }
         };
 
-        function openWindow(key) {
-            playTone(440, "sine", 0.05);
-            const winData = windowContents[key];
-            if (!winData) return;
+        function launchWindow(key) {
+            const source = directoryDatabase[key];
+            if(!source) return;
 
-            // Eğer zaten varsa sil yenisini aç (Z-Index karmaşasını önlemek ve performans için)
-            const oldWin = document.getElementById(`win_${key}`);
-            if (oldWin) oldWin.remove();
+            // Varsa eski pencereyi kaldır (Performans ve temiz bellek yönetimi)
+            const duplicate = document.getElementById(`window_${key}`);
+            if(duplicate) duplicate.remove();
 
-            const win = document.createElement('div');
-            win.id = `win_${key}`;
-            win.className = 'win95-window';
-            win.style.width = '340px';
-            win.style.left = `${60 + Math.random() * 120}px`;
-            win.style.top = `${150 + Math.random() * 100}px`;
+            const frame = document.createElement('div');
+            frame.id = `window_${key}`;
+            frame.className = 'w95-frame';
+            frame.style.width = '350px';
+            frame.style.left = `${80 + Math.random() * 150}px`;
+            frame.style.top = `${140 + Math.random() * 100}px`;
 
-            win.innerHTML = `
-                <div class="win95-header ${winData.corrupted ? 'corrupted' : ''}">
-                    <span>${winData.title}</span>
-                    <div class="win95-close" onclick="document.getElementById('win_${key}').remove()">X</div>
+            frame.innerHTML = `
+                <div class="w95-titlebar ${key === 'liminal_records' ? 'anomaly-bar' : ''}">
+                    <span>${source.title}</span>
+                    <div class="w95-close-btn" onclick="document.getElementById('window_${key}').remove()">X</div>
                 </div>
-                <div class="win95-content ${key === 'terminal_dev' ? 'terminal-content' : ''}">
-                    ${winData.html}
+                <div class="w95-body ${source.mode === 'terminal' ? 'terminal-mode' : ''}">
+                    ${source.data}
                 </div>
             `;
 
-            document.getElementById('mainDesktop').appendChild(win);
-            makeDraggable(win);
+            document.getElementById('osDesktop').appendChild(frame);
+            injectDragMechanics(frame);
+        }
 
-            // Eğer terminal açıldıysa sahte kod akışı başlat
-            if (key === 'terminal_dev') {
-                let count = 0;
-                const interval = setInterval(() => {
-                    const tBox = document.getElementById('termData');
-                    if (tBox) {
-                        tBox.innerHTML += `<br>> Sızma Seviyesi: %${count += 20} ... ATTACH_ERR`;
-                        if (count >= 100) clearInterval(interval);
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 800);
+        // Masaüstü Elemanlarını Sürükleme Algoritması
+        function injectDragMechanics(target) {
+            let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+            const header = target.querySelector('.w95-titlebar');
+            if(header) header.onmousedown = startWindowDrag;
+
+            function startWindowDrag(e) {
+                e.preventDefault();
+                p3 = e.clientX; p4 = e.clientY;
+                document.onmouseup = endWindowDrag;
+                document.onmousemove = executeWindowDrag;
+            }
+
+            function executeWindowDrag(e) {
+                e.preventDefault();
+                p1 = p3 - e.clientX; p2 = p4 - e.clientY;
+                p3 = e.clientX; p4 = e.clientY;
+                target.style.top = (target.offsetTop - p2) + "px";
+                target.style.left = (target.offsetLeft - p1) + "px";
+            }
+
+            function endWindowDrag() {
+                document.onmouseup = null; document.onmousemove = null;
             }
         }
 
-        // Pencereleri Sürükleme Mekanizması (Profesyonel Drag & Drop)
-        function makeDraggable(elmnt) {
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            const header = elmnt.querySelector('.win95-header');
-            if (header) {
-                header.onmousedown = dragMouseDown;
-            }
-
-            function dragMouseDown(e) {
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = closeDragElement;
-                document.onmousemove = elementDrag;
-            }
-
-            function elementDrag(e) {
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        }
-
-        // --- 11. SCROLL TABANLI EKRAN BOZULMA MOTORU ---
+        // --- 13. HAREKET VE KAYDIRMA TABANLI PARANOYA SİMÜLASYONU ---
         window.addEventListener('scroll', () => {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
-            const body = document.getElementById('mainBody');
+            const scrollFactor = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const body = document.getElementById('coreBody');
             
-            if (scrollPercent > 0.2) {
-                body.classList.add('shake-effect');
-                // Parazit yoğunluğunu hissettir
-                document.querySelector('.vhs-noise').style.opacity = 0.15;
-            } else {
-                body.classList.remove('shake-effect');
-                document.querySelector('.vhs-noise').style.opacity = 0.04;
-            }
-        });
-
-        // --- 12. MOUSE HAREKETİ İLE ANLIK GLITCH TETİKLEME ---
-        let mouseMoveCount = 0;
-        window.addEventListener('mousemove', () => {
-            if (!state.hasUserInteracted) return;
-            mouseMoveCount++;
-            if (mouseMoveCount > 150) { // Belirli hareket birikiminde hafif ekran sapması yap
-                mouseMoveCount = 0;
-                const desktop = document.getElementById('mainDesktop');
-                desktop.style.transform = `skewX(${Math.random() * 3 - 1.5}deg)`;
-                setTimeout(() => { desktop.style.transform = 'none'; }, 80);
-            }
-        });
-
-        // --- 13. RASTGELE HATA PENCERELERİ VE ANOMALİ DÖNGÜSÜ ---
-        function initBackgroundAnomalies() {
-            // Rastgele aralıklarla Windows Hata pencereleri üretsin
-            setInterval(() => {
-                if (Math.random() > 0.4) {
-                    spawnRandomError();
-                }
-            }, 12000);
-
-            // Nadir Jumpscare Zamanlayıcısı
-            setInterval(() => {
-                if (Math.random() > 0.85 && !state.jumpscareTriggered) {
-                    triggerJumpscare();
-                }
-            }, 35000);
-        }
-
-        function spawnRandomError() {
-            if (!state.hasUserInteracted) return;
-            const errors = [
-                "Fatal Exception 0E has occurred at 0028:C0011A25.",
-                "The system is running low on reality memory.",
-                "FILE_NOT_FOUND: Soul.dll missing.",
-                "Gözlerini ekrandan ayırma. Arkana bakma."
-            ];
-            
-            const randomMsg = errors[Math.floor(Math.random() * errors.length)];
-            playTone(130, "square", 0.15);
-
-            const errWin = document.createElement('div');
-            errWin.className = 'win95-window';
-            errWin.style.width = '260px';
-            errWin.style.left = `${Math.random() * (window.innerWidth - 280)}px`;
-            errWin.style.top = `${Math.random() * (window.innerHeight - 200)}px`;
-            errWin.style.zIndex = 2000;
-
-            errWin.innerHTML = `
-                <div class="win95-header corrupted">
-                    <span>ÖLÜMCÜL_SİSTEM_HATASI</span>
-                    <div class="win95-close" onclick="this.parentElement.parentElement.remove()">X</div>
-                </div>
-                <div class="win95-content" style="background: #fff; color: #000;">
-                    <p>${randomMsg}</p>
-                </div>
-            `;
-            document.getElementById('mainDesktop').appendChild(errWin);
-        }
-
-        // --- 14. EASTER EGG & GİZLİ DETAY TETİKLEYİCİSİ ---
-        function triggerSecretEgg() {
-            playTone(55, "sawtooth", 2.0);
-            document.getElementById('secretIcon').style.opacity = '1';
-            alert("[ARG BULGUSU #666]: KORİDORLAR ASLA BİTMEZ. DOĞRU KAPIDAN GİRMEDİNİZ.");
-        }
-
-        // --- 15. KONTROLLÜ JUMPSCARE SİSTEMİ ---
-        function triggerJumpscare() {
-            state.jumpscareTriggered = true;
-            const overlay = document.getElementById('jumpscareOverlay');
-            
-            // Yüksek frekanslı rahatsız edici ham ses tetiklemesi
-            playTone(290, "sawtooth", 1.5);
-            playTone(310, "square", 1.5);
-
-            overlay.style.display = 'flex';
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                // Jumpscare sonrası sistemi sıfırla veya tüm pencereleri kapatarak stabil hale getir
-                const windows = document.querySelectorAll('.win95-window');
-                windows.forEach(w => w.remove());
-                state.jumpscareTriggered = false;
-            }, 1200);
-        }
-    </script>
-</body>
-</html>
+            if(scrollFactor > 0.25) {
+                body.classList.add
